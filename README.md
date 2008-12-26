@@ -1,1 +1,2 @@
-Like to read comic books?  Like Clojure?  mor marries the two.
+The first Lisp written in Python 3000... ever!
+-m
