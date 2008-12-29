@@ -12,6 +12,14 @@ class Environment:
         else:
             self.level = 0
 
+    def get(self, key):
+        if self.binds.has_key(key):
+            return self.binds[key]
+        elif self.parent:
+            return self.parent.get(key)
+        else:
+            return None
+
     def set(self, key, value):
         if self.binds.has_key(key):
             self.binds[key] = value
