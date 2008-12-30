@@ -33,6 +33,7 @@ class Lithp(Lisp):
         self.init()
 
     def init(self):
+        # Testing symbol defs
         self.environment.set("foo", Function(self.dummy))
         self.environment.set("bar", Function(self.dummy))
         self.environment.set("baz", Function(self.dummy))
@@ -44,7 +45,7 @@ class Lithp(Lisp):
 
     def print_banner(self):
         print "The ", NAME, " programming shell ", VERSION
-        print "   by Fogus, http://earthvssoup.com/projects/lithp"
+        print "   by Fogus, http://fogus.me"
         
     def repl(self):
         print self.environment
