@@ -1,3 +1,10 @@
+# The Lithp interpreter is requires Python 3000 to function.  
+# For more information:
+#   http://www.slideshare.net/jza/python-3000
+#   http://www.ibm.com/developerworks/linux/library/l-python3-1/
+#   http://www.python.org/dev/peps/pep-3000/
+#   http://www.python.org/dev/peps/
+
 import getopt, sys
 from lisp import Lisp
 from env import Environment
@@ -41,14 +48,14 @@ class Lithp(Lisp):
     def usage(self):
         self.print_banner()
         print
-        print NAME.lower(), " <options> [lithpfiles]\n"
+        print(NAME.lower(), " <options> [lithpfiles]\n")
 
     def print_banner(self):
-        print "The ", NAME, " programming shell ", VERSION
-        print "   by Fogus, http://fogus.me"
+        print("The ", NAME, " programming shell ", VERSION)
+        print("   by Fogus, http://fogus.me")
         
     def repl(self):
-        print self.environment
+        print(self.environment)
         
 
 if __name__ == '__main__':
@@ -56,9 +63,9 @@ if __name__ == '__main__':
     
     try:
         opts, files = getopt.getopt(sys.argv[1:], "hd", ["help", "debug"])
-    except getopt.GetoptError, err:
+    except getopt.GetoptError as err:
         # print help information and exit:
-        print str( err) # will print something like "option -a not recognized"
+        print(str( err)) # will print something like "option -a not recognized"
         lithp.usage()
         sys.exit(INVALID_OPS)
             
@@ -69,7 +76,7 @@ if __name__ == '__main__':
         elif opt in ("--debug", "-d"):
             lithp.verbose = True
         else:
-            print "unknown option " + opt
+            print("unknown option " + opt)
 
     lithp.print_banner()
     lithp.repl()

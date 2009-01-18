@@ -12,4 +12,4 @@ class Lisp:
     http://www-formal.stanford.edu/jmc/recursive.html
     """
     def dummy(self, env, args):
-        print "I do nothing"
+        print("I do nothing")

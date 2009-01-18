@@ -1,3 +1,3 @@
 class Evalable:
     def eval(self, environment, args=None):
-        raise Error, "Unimplemented"
+        raise Error ["Unimplemented"]

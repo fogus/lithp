@@ -13,7 +13,7 @@ class Environment:
             self.level = 0
 
     def get(self, key):
-        if self.binds.has_key(key):
+        if key in self.binds:
             return self.binds[key]
         elif self.parent:
             return self.parent.get(key)
@@ -21,7 +21,7 @@ class Environment:
             return None
 
     def set(self, key, value):
-        if self.binds.has_key(key):
+        if key in self.binds:
             self.binds[key] = value
         elif self.parent:
             self.parent.set(key,value)
@@ -31,7 +31,6 @@ class Environment:
     def __repr__( self):            
         ret = "\n%s:\n" % self.level
         keys = self.binds.keys()
-        keys.sort()
         
         for key in keys:
             ret = ret + " %5s: %s\n" % (key, self.binds[key])
