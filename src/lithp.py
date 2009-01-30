@@ -40,10 +40,8 @@ class Lithp(Lisp):
         self.init()
 
     def init(self):
-        # Testing symbol defs
-        self.environment.set("foo", Function(self.dummy))
-        self.environment.set("bar", Function(self.dummy))
-        self.environment.set("baz", Function(self.dummy))
+        # Define core functions
+        self.environment.set( "print", Function( self.println))
 
     def usage(self):
         self.print_banner()
