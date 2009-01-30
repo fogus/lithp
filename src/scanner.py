@@ -1,4 +1,5 @@
-from symbol import Symbol
+from atom import Symbol
+from atom import String
 from number import Number
 
 
