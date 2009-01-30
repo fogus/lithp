@@ -33,7 +33,8 @@ class Lithp(Lisp):
         
         self.debug = False
         self.verbose = True
-        
+        self.print_banner()
+
         self.scanner = Scanner()
         self.environment = Environment()
         
@@ -47,7 +48,7 @@ class Lithp(Lisp):
     def usage(self):
         self.print_banner()
         print
-        print(NAME.lower(), " <options> [lithpfiles]\n")
+        print(NAME.lower(), " <options> [lithp files]\n")
 
     def print_banner(self):
         print("The ", NAME, " programming shell ", VERSION)
@@ -77,5 +78,4 @@ if __name__ == '__main__':
         else:
             print("unknown option " + opt)
 
-    lithp.print_banner()
     lithp.repl()
