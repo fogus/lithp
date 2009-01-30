@@ -1,7 +1,6 @@
-from interface import Evalable
+from interface import Eval
 
-
-class Function(Evalable):
+class Function(Eval):
     def __init__(self, fn):
         self.fn = fn
 
