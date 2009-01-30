@@ -1,4 +1,5 @@
 from symbol import Symbol
+from number import Number
 
 
 class Scanner:
