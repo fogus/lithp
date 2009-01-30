@@ -12,7 +12,8 @@ class Lisp:
     http://www-formal.stanford.edu/jmc/recursive.html
     """
     def dummy(self, env, args):
-        print("I do nothing!")
+        print("I do nothing, but you gave me: ")
+        self.prinln(env, args)
 
     def println( self, env, args):
         for a in args:
