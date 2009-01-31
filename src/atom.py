@@ -20,7 +20,7 @@ class String(Eval):
         self.string = str
 
     def __repr__(self):
-        return self.string
+        return repr(self.string)
 
     def eval(self, env, args=None):
         return self.string

@@ -6,7 +6,7 @@ class Number(Eval):
         self.value = v
 
     def __repr__( self):
-        return self.value
+        return repr(self.value)
 
     def eval( self, env, args=None):
         return self
