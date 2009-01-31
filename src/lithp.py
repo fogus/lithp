@@ -14,6 +14,7 @@ from function import Function
 NAME = "Lithp"
 VERSION = "v0.0.1"
 PROMPT = "lithp"
+DEPTH_MARK = "."
 
 INVALID_OPS = 1
 
@@ -56,6 +57,50 @@ class Lithp(Lisp):
         
     def repl(self):
         print(self.environment)
+
+        while True:
+            source = self.get_complete_command()
+
+            if source in ["(quit)"]:
+                break
+ 
+            print(source)
+
+    def get_complete_command(self, line="", depth=0):
+        if line != "":
+            line = line + " "
+
+        if self.environment.level != 0:
+            prompt = PROMPT + " %i%s " % (self.environment.level, DEPTH_MARK * (depth+1))
+        else:
+            if depth == 0:
+                prompt = PROMPT + "> "
+            else:
+                prompt = PROMPT + "%s " % (DEPTH_MARK * (depth+1))
+
+            line = line  + self.read_line(prompt)
+            oparens = 0
+            cparens = 0
+            for c in line:
+                if c == "(":
+                    oparens = oparens + 1
+                elif c == ")":
+                    cparens = cparens + 1
+            if oparens > cparens:
+                return self.get_complete_command( line, depth+1)
+            else:
+                return line
+
+    def read_line( self, prompt) :
+        """raw_input with pseudo I/O streams."""
+        if prompt :
+            self.stdout.write("%s" % prompt)
+            self.stdout.flush()
+        line = self.stdin.readline()    
+        if line[-1] == "\n":
+            line = line[:-1]
+
+        return line  
         
 
 if __name__ == '__main__':
