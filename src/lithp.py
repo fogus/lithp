@@ -4,6 +4,7 @@
 #   http://www.ibm.com/developerworks/linux/library/l-python3-1/
 #   http://www.python.org/dev/peps/pep-3000/
 #   http://www.python.org/dev/peps/
+#   http://www.python.org/dev/peps/pep-0008/
 
 import getopt, sys
 from lisp import Lisp
