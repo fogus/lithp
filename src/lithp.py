@@ -59,9 +59,9 @@ class Lithp(Lisp):
         print(self.environment)
 
         while True:
-            source = self.get_complete_command()
+            source = self.get_complete_command() # Stealing a line from CLIPS
 
-            if source in ["(quit)"]:
+            if source in ["(quit)"]: # `quit` is not in the original Lisp either, but alas
                 break
  
             print(source)
@@ -79,20 +79,18 @@ class Lithp(Lisp):
                 prompt = PROMPT + "%s " % (DEPTH_MARK * (depth+1))
 
             line = line  + self.read_line(prompt)
-            oparens = 0
-            cparens = 0
-            for c in line:
-                if c == "(":
-                    oparens = oparens + 1
-                elif c == ")":
-                    cparens = cparens + 1
-            if oparens > cparens:
+            balance = 0                    # Used to balance the parens
+            for ch in line:
+                if ch == "(":
+                    balance = balance + 1  # This is not perfect, but will do for now
+                elif ch == ")":
+                    balance = balance - 1  # Too many right parens is a problem
+            if balance != 0:               # Balanced parens gives zero
                 return self.get_complete_command( line, depth+1)
             else:
                 return line
 
     def read_line( self, prompt) :
-        """raw_input with pseudo I/O streams."""
         if prompt :
             self.stdout.write("%s" % prompt)
             self.stdout.flush()
