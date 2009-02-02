@@ -10,8 +10,16 @@ class Scanner:
        self.length = 0
        self.sexpr = []
 
+       if str:
+           self.sexpr = self.get_sexpr()
+
     def get_sexpr(self, source=None):
-        return source
+        if source:
+            self.raw_source = source
+            self.length = len(self.raw_source)
+            self.index = 0
+
+        
 
     def get_token(self):
         
