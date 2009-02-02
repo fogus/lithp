@@ -39,13 +39,14 @@ class Scanner:
         token_str = ""
         
         # Build the token string
-        while self.index < self.length - 1:
+        while self.index < self.length:
             token_str = token_str + self.raw_source[self.index]
             self.index = self.index + 1
+            print(token_str)
 
         int_regex = re.compile(r'^[+-]?\d+$')
         
         if int_regex.match(token_str):
-            return Number(string.atoi(token_str))
+            return Number(int(token_str))
 
         return None

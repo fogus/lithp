@@ -98,7 +98,7 @@ class Lithp(Lisp):
                     balance = balance + 1  # This is not perfect, but will do for now
                 elif ch == ")":
                     balance = balance - 1  # Too many right parens is a problem
-            if balance > 0:               # Balanced parens gives zero
+            if balance > 0:                # Balanced parens gives zero
                 return self.get_complete_command( line, depth+1)
             elif balance < 0:
                 raise ValueError("Invalid paren pattern")
