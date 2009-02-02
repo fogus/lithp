@@ -42,7 +42,6 @@ class Scanner:
         while self.index < self.length:
             token_str = token_str + self.raw_source[self.index]
             self.index = self.index + 1
-            print(token_str)
 
         int_regex = re.compile(r'^[+-]?\d+$')
         
