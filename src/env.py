@@ -18,7 +18,7 @@ class Environment:
         elif self.parent:
             return self.parent.get(key)
         else:
-            return None
+            raise ValueError("Invalid symbol " + key)
 
     def set(self, key, value):
         if key in self.binds:
