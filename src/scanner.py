@@ -3,7 +3,7 @@ import re
 
 from atom import Symbol
 from atom import String
-from number import Number
+from number import Number, Integral
 
 class Scanner:
     def __init__(self, str=None):
@@ -46,6 +46,6 @@ class Scanner:
         int_regex = re.compile(r'^[+-]?\d+$')
         
         if int_regex.match(token_str):
-            return Number(int(token_str))
+            return Integral(int(token_str))
 
         return None

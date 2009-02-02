@@ -10,3 +10,6 @@ class Number(Eval):
 
     def eval( self, env, args=None):
         return self
+
+class Integral(Number):
+    pass
