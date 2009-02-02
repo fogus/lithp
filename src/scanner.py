@@ -43,9 +43,7 @@ class Scanner:
             token_str = token_str + self.raw_source[self.index]
             self.index = self.index + 1
 
-        int_regex = re.compile(r'^[+-]?\d+$')
-        
-        if int_regex.match(token_str):
+        if Integral.REGEX.match(token_str):
             return Integral(int(token_str))
 
         return None

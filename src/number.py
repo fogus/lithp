@@ -1,4 +1,5 @@
 from interface import Eval
+import re
 
 
 class Number(Eval):
@@ -12,4 +13,8 @@ class Number(Eval):
         return self
 
 class Integral(Number):
-    pass
+    REGEX = re.compile(r'^[+-]?\d+$')
+
+    def __init__( self, v):
+        super(Integral, self).__init__(v)
+
