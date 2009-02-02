@@ -6,5 +6,5 @@ class Scanner:
     def __init__(self, str=None):
        print("Initializing the scanner...")
 
-    def sexpr(self, source=None):
+    def get_sexpr(self, source=None):
         return source

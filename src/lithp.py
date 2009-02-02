@@ -68,13 +68,13 @@ class Lithp(Lisp):
             self.process(source)
 
     def process(self, source):
-        sexpr = self.scanner.sexpr(source)
+        sexpr = self.scanner.get_sexpr(source)
         
         while sexpr:
             if self.verbose:
                 self.stdout.write( "\t%s\n" % self.eval( sexpr))
 
-            sexpr = self.scanner.sexpr()
+            sexpr = self.scanner.get_sexpr()
 
     def eval( self, sexpr):
         return sexpr
