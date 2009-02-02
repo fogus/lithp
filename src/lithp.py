@@ -77,7 +77,7 @@ class Lithp(Lisp):
             sexpr = self.scanner.get_sexpr()
 
     def eval( self, sexpr):
-        return sexpr
+        return sexpr.eval(self.environment)
 
     def get_complete_command(self, line="", depth=0):
         if line != "":
