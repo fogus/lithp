@@ -68,8 +68,14 @@ class Lithp(Lisp):
             self.process(source)
 
     def process(self, source):
-        print("Evaling...")
-        print(source)
+        sexpr = self.scanner.sexpr(source)
+        
+        while sexpr:
+            if self.verbose:
+                self.stdout.write( "\t%s\n" % self.eval( sexpr))
+
+    def eval( self, sexpr):
+        return sexpr
 
     def get_complete_command(self, line="", depth=0):
         if line != "":
