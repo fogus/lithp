@@ -47,7 +47,9 @@ class Scanner:
             return Integral(int(token_str))
         elif Float.REGEX.match(token_str):
             return Float(float(token_str))
-        else:
+        elif LongInt.REGEX.match(token_str):
             return LongInt(int(token_str))
+        else:
+            return Symbol(token_str)
 
         return None
