@@ -65,7 +65,11 @@ class Lithp(Lisp):
             if source in ["(quit)"]: # `quit` is not in the original Lisp either, but alas
                 break
  
-            print(source)
+            self.process(source)
+
+    def process(self, source):
+        print("Evaling...")
+        print(source)
 
     def get_complete_command(self, line="", depth=0):
         if line != "":
