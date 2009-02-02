@@ -74,6 +74,8 @@ class Lithp(Lisp):
             if self.verbose:
                 self.stdout.write( "\t%s\n" % self.eval( sexpr))
 
+            sexpr = self.scanner.sexpr()
+
     def eval( self, sexpr):
         return sexpr
 
