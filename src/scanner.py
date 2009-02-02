@@ -3,7 +3,7 @@ import re
 
 from atom import Symbol
 from atom import String
-from number import Number, Integral
+from number import Number, Integral, LongInt, Float
 
 class Scanner:
     def __init__(self, str=None):
@@ -45,5 +45,9 @@ class Scanner:
 
         if Integral.REGEX.match(token_str):
             return Integral(int(token_str))
+        elif Float.REGEX.match(token_str):
+            return Float(float(token_str))
+        else:
+            return LongInt(int(token_str))
 
         return None
