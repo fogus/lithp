@@ -5,6 +5,7 @@ from atom import Symbol
 from atom import String
 from number import Number, Integral, LongInt, Float
 from lisp import Lisp
+from seq import List
 
 DELIM = string.whitespace + Lisp.SPECIAL
 
@@ -30,7 +31,7 @@ class Scanner:
 
         if token == ')':
             raise ValueError("Unexpected right paren")
-        elif token == ')':
+        elif token == '(':
             expr = []
             token = self.get_token()
             
@@ -44,6 +45,7 @@ class Scanner:
                     expr.append(token)
 
                 token = self.get_token()
+
             return List(expr)
         else:
             return token                
@@ -70,7 +72,14 @@ class Scanner:
         
             # Build the token string
             while self.index < self.length:
-                token_str = token_str + self.raw_source[self.index]
+                if self.raw_source[self.index] in DELIM:
+                    break
+                else:
+                    token_str = token_str + self.raw_source[self.index]
+                    self.index = self.index + 1
+
+            if not self.raw_source[self.index] in DELIM:
+                token = token + self.raw_source[self.index]
                 self.index = self.index + 1
             
             if Integral.REGEX.match(token_str):
