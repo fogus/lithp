@@ -1,4 +1,6 @@
 class Lisp:
+    SPECIAL = "()'"
+
     """
     The original Lisp described by McCarthy in his 1960 paper describes the following function set:
     1.  `atom`
