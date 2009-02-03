@@ -26,10 +26,12 @@ class Scanner:
             self.index = 0
 
         token = self.get_token()
+        expr = None
 
         if token == ')':
             raise ValueError("Unexpected right paren")
-        elif token == '(':
+        elif token == ')':
+            expr = []
             token = self.get_token()
             
             while token != ')':
@@ -38,10 +40,13 @@ class Scanner:
                     self.index = self.index - 1
                 elif token == None:
                     raise ValueError("Invalid end of expression")
+                else:
+                    expr.append(token)
 
                 token = self.get_token()
-
-        return token                
+            return List(expr)
+        else:
+            return token                
         
 
     def get_token(self):
