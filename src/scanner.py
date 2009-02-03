@@ -56,31 +56,31 @@ class Scanner:
             return None
 
         # Kill whitespace
-        while self.index < self.length and self.raw_source[self.index] in string.whitespace:
-            self.inc()
+        while self.index < self.length and self.current() in string.whitespace:
+            self.next()
 
         # Check if we had a string of whitespace
         if self.index == self.length:
             return None       
 
-        if self.raw_source[self.index] in Lisp.SPECIAL:
-            self.inc()
+        if self.current() in Lisp.SPECIAL:
+            self.next()
 
-            return self.raw_source[self.index - 1]
+            return self.previous()
         else:
             token_str = ""
         
             # Build the token string
             while self.index < self.length - 1:
-                if self.raw_source[self.index] in DELIM:
+                if self.current() in DELIM:
                     break
                 else:
-                    token_str = token_str + self.raw_source[self.index]
-                    self.inc()
+                    token_str = token_str + self.current()
+                    self.next()
 
-            if not self.raw_source[self.index] in DELIM:
-                token_str = token_str + self.raw_source[self.index]
-                self.inc()
+            if not self.current() in DELIM:
+                token_str = token_str + self.current()
+                self.next()
             
             if Integral.REGEX.match(token_str):
                 return Integral(int(token_str))
@@ -93,7 +93,11 @@ class Scanner:
         
         return None
 
-    def inc(self):
+    def next(self):
         self.index = self.index + 1
 
+    def current(self):
+        return self.raw_source[self.index]
 
+    def previous(self):
+        return self.raw_source[self.index - 1]
