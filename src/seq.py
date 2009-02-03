@@ -16,3 +16,17 @@ class List(Seq):
             self.nodes = []
         else:
             self.nodes = l
+
+    def car(self):
+        return self.nodes[0]
+
+    def cdr(self):
+        try:
+            return List(self.nodes[1:])
+        except:
+            return List([])
+
+    def cons(self, e):
+        n = List(self.nodes[:])
+        n.nodes.insert(0, e)
+        return n
