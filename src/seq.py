@@ -30,3 +30,8 @@ class List(Seq):
         n = List(self.nodes[:])
         n.nodes.insert(0, e)
         return n
+
+    def eval(self, env, args=None):
+        form = self.nodes[0].eval(env)
+
+        return form.eval(env, self.nodes[1:])
