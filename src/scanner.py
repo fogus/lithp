@@ -4,6 +4,8 @@ import re
 from atom import Symbol
 from atom import String
 from number import Number, Integral, LongInt, Float
+from lisp import Lisp
+
 
 class Scanner:
     def __init__(self, str=None):
@@ -36,20 +38,25 @@ class Scanner:
         if self.index == self.length:
             return None       
 
-        token_str = ""
-        
-        # Build the token string
-        while self.index < self.length:
-            token_str = token_str + self.raw_source[self.index]
+        if self.raw_source[self.index] in Lisp.SPECIAL:
             self.index = self.index + 1
 
-        if Integral.REGEX.match(token_str):
-            return Integral(int(token_str))
-        elif Float.REGEX.match(token_str):
-            return Float(float(token_str))
-        elif LongInt.REGEX.match(token_str):
-            return LongInt(int(token_str))
+            return self.raw_source[self.index - 1]
         else:
-            return Symbol(token_str)
-
+            token_str = ""
+        
+            # Build the token string
+            while self.index < self.length:
+                token_str = token_str + self.raw_source[self.index]
+                self.index = self.index + 1
+            
+            if Integral.REGEX.match(token_str):
+                return Integral(int(token_str))
+            elif Float.REGEX.match(token_str):
+                return Float(float(token_str))
+            elif LongInt.REGEX.match(token_str):
+                return LongInt(int(token_str))
+            else:
+                return Symbol(token_str)
+        
         return None
