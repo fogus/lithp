@@ -6,6 +6,7 @@ from atom import String
 from number import Number, Integral, LongInt, Float
 from lisp import Lisp
 
+DELIM = string.whitespace + Lisp.SPECIAL
 
 class Scanner:
     def __init__(self, str=None):
@@ -24,7 +25,24 @@ class Scanner:
             self.length = len(self.raw_source)
             self.index = 0
 
-        return self.get_token()
+        token = self.get_token()
+
+        if token == ')':
+            raise ValueError("Unexpected right paren")
+        elif token == '(':
+            token = self.get_token()
+            
+            while token != ')':
+                if token == '(':
+                    # Start parsing again.
+                    self.index = self.index - 1
+                elif token == None:
+                    raise ValueError("Invalid end of expression")
+
+                token = self.get_token()
+
+        return token                
+        
 
     def get_token(self):
         if self.index >= self.length:
