@@ -10,6 +10,19 @@ class Seq(Eval):
     def cons(self):
         pass
 
+    def __iter__(self):
+        pass
+
+    def __len__(self):
+        pass
+
+    def __contains__(self):
+        pass
+
+    def __getitem__(self):
+        pass
+
+
 class List(Seq):
     def __init__(self, l=None):
         if l is None:
@@ -34,4 +47,5 @@ class List(Seq):
     def eval(self, env, args=None):
         form = self.car().eval(env)
 
-        return form.eval(env, self.nodes[1:])
+        return form.eval(env, self.cdr())
+
