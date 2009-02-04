@@ -10,16 +10,17 @@ class Seq(Eval):
     def cons(self):
         pass
 
+    # The following four functions needed for iterability
     def __iter__(self):
         pass
 
     def __len__(self):
         pass
 
-    def __contains__(self):
+    def __contains__(self, e):
         pass
 
-    def __getitem__(self):
+    def __getitem__(self, e):
         pass
 
 
