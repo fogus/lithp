@@ -45,6 +45,7 @@ class Lithp(Lisp):
     def init(self):
         # Define core functions
         self.environment.set( "print", Function( self.println))
+        self.environment.set( "eq", Function( self.eq))
 
     def usage(self):
         self.print_banner()
