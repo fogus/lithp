@@ -1,6 +1,9 @@
 from interface import Eval
 
 class Seq(Eval):
+    def __init__( self):
+        self.data = None
+
     def car(self):
         pass
 
@@ -26,23 +29,25 @@ class Seq(Eval):
 
 class List(Seq):
     def __init__(self, l=None):
+        super(List, self).__init__()
+
         if l is None:
-            self.nodes = []
+            self.data = []
         else:
-            self.nodes = l
+            self.data = l
 
     def car(self):
-        return self.nodes[0]
+        return self.data[0]
 
     def cdr(self):
         try:
-            return List(self.nodes[1:])
+            return List(self.data[1:])
         except:
             return List([])
 
     def cons(self, e):
-        n = List(self.nodes[:])
-        n.nodes.insert(0, e)
+        n = List(self.data[:])
+        ndata.insert(0, e)
         return n
 
     def eval(self, env, args=None):
@@ -51,13 +56,14 @@ class List(Seq):
         return form.eval(env, self.cdr())
 
     def __iter__(self):
-        return self.nodes.__iter__()
+        return self.data.__iter__()
 
     def __len__(self):
-        return len(self.nodes)
+        return len(self.data)
 
     def __contains__(self, e):
-        return e in self.nodes
+        return e in self.data
 
     def __getitem__(self, e):
-        return self.nodes[e]
+        return self.data[e]
+
