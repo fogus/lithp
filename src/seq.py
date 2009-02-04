@@ -67,3 +67,12 @@ class List(Seq):
     def __getitem__(self, e):
         return self.data[e]
 
+    def __repr__(self):
+        if self.data == []:
+            return "()"
+
+        ret = "(%s" % self.data[0]
+        for e in self.data[1:]:
+            ret = ret + " %s" % e
+
+        return ret + ")"
