@@ -23,6 +23,12 @@ class Lisp:
 
         return (args[0] == args[1])
 
+    def quote(self, env, args):
+        if(len(args) > 1):
+            raise ValueError("Wrong number of arguments, expected {0}, got {1}".format(1, len(args)))
+
+        return args[0]
+
     def println(self, env, args):
         for a in args:
             result = a.eval(env)

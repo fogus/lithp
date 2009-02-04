@@ -13,7 +13,7 @@ from scanner import Scanner
 from function import Function
 
 NAME = "Lithp"
-VERSION = "v0.0.1"
+VERSION = "v0.0.2"
 PROMPT = "lithp"
 DEPTH_MARK = "."
 
@@ -46,6 +46,7 @@ class Lithp(Lisp):
         # Define core functions
         self.environment.set( "print", Function( self.println))
         self.environment.set( "eq", Function( self.eq))
+        self.environment.set( "quote", Function( self.quote))
 
     def usage(self):
         self.print_banner()
