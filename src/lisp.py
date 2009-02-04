@@ -23,4 +23,4 @@ class Lisp:
             self.stdout.write( "%s " % str( result))
 
         self.stdout.write( "\n")
-        return TRUE
+        return True

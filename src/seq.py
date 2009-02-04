@@ -34,4 +34,4 @@ class List(Seq):
     def eval(self, env, args=None):
         form = self.car().eval(env)
 
-        return form.eval(env, self.cdr())
+        return form.eval(env, self.nodes[1:])
