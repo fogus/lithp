@@ -1,5 +1,6 @@
 from interface import Eval
 import re
+import types
 
 
 class Number(Eval):
@@ -13,7 +14,10 @@ class Number(Eval):
         return self
 
     def __eq__(self, rhs):
-        return (self.data == rhs.data)
+        if isinstance(rhs, Number):
+            return (self.data == rhs.data)
+        else:
+            return False
 
 class Integral(Number):
     REGEX = re.compile(r'^[+-]?\d+$')
