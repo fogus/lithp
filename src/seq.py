@@ -49,3 +49,14 @@ class List(Seq):
 
         return form.eval(env, self.cdr())
 
+    def __iter__(self):
+        return self.nodes.__iter__()
+
+    def __len__(self):
+        return len(self.nodes)
+
+    def __contains__(self, e):
+        return e in self.nodes
+
+    def __getitem__(self, e):
+        return self.nodes[e]
