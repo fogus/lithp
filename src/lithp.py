@@ -1,4 +1,4 @@
-# The Lithp interpreter is requires Python 3000 to function.  
+# The Lithp interpreter is requires Python 3000 to function.
 # For more information:
 #   http://www.slideshare.net/jza/python-3000
 #   http://www.ibm.com/developerworks/linux/library/l-python3-1/
@@ -32,20 +32,19 @@ class Lithp(Lisp):
     def __init__( self):
         iostreams=(sys.stdin, sys.stdout, sys.stderr)
         (self.stdin, self.stdout, self.stderr) = iostreams
-        
+
         self.debug = False
         self.verbose = True
         self.print_banner()
 
         self.scanner = Scanner()
         self.environment = Environment()
-        
+
         self.init()
 
     def init(self):
         # Define core functions
         self.environment.set( "print", Function( self.println))
-        self.environment.set("foo", Function(self.dummy))
 
     def usage(self):
         self.print_banner()
@@ -55,7 +54,7 @@ class Lithp(Lisp):
     def print_banner(self):
         print("The ", NAME, " programming shell ", VERSION)
         print("   by Fogus, http://fogus.me")
-        
+
     def repl(self):
         print(self.environment)
 
@@ -64,12 +63,12 @@ class Lithp(Lisp):
 
             if source in ["(quit)"]: # `quit` is not in the original Lisp either, but alas
                 break
- 
+
             self.process(source)
 
     def process(self, source):
         sexpr = self.scanner.get_sexpr(source)
-        
+
         while sexpr:
             if self.verbose:
                 self.stdout.write( "\t%s\n" % self.eval( sexpr))
@@ -113,16 +112,16 @@ class Lithp(Lisp):
         if prompt :
             self.stdout.write("%s" % prompt)
             self.stdout.flush()
-        line = self.stdin.readline()    
+        line = self.stdin.readline()
         if line[-1] == "\n":
             line = line[:-1]
 
-        return line  
-        
+        return line
+
 
 if __name__ == '__main__':
     lithp = Lithp()
-    
+
     try:
         opts, files = getopt.getopt(sys.argv[1:], "hd", ["help", "debug"])
     except getopt.GetoptError as err:
@@ -130,7 +129,7 @@ if __name__ == '__main__':
         print(str( err)) # will print something like "option -a not recognized"
         lithp.usage()
         sys.exit(INVALID_OPS)
-            
+
     for opt,arg in opts:
         if opt in ("--help", "-h"):
             lithp.usage()
