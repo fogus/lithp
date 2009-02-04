@@ -4,13 +4,16 @@ import re
 
 class Number(Eval):
     def __init__( self, v):
-        self.value = v
+        self.data = v
 
     def __repr__( self):
-        return repr(self.value)
+        return repr(self.data)
 
     def eval( self, env, args=None):
         return self
+
+    def __eq__(self, rhs):
+        return (self.data == rhs.data)
 
 class Integral(Number):
     REGEX = re.compile(r'^[+-]?\d+$')
