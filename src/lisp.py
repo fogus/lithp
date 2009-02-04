@@ -17,6 +17,12 @@ class Lisp:
         print("I do nothing, but you gave me: ")
         self.println(env, args)
 
+    def eq(self, env, args):
+        if len(args) > 2:
+            raise ValueError("Wrong number of arguments, expected {0}, got {1}".format(2, len(args)))
+
+        return (args[0] == args[1])
+
     def println(self, env, args):
         for a in args:
             result = a.eval(env)
