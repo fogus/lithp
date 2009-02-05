@@ -11,6 +11,9 @@ from lisp import Lisp
 from env import Environment
 from scanner import Scanner
 from function import Function
+from atom import TRUE
+from atom import FALSE
+
 
 NAME = "Lithp"
 VERSION = "v0.0.2"
@@ -41,6 +44,9 @@ class Lithp(Lisp):
         self.environment = Environment()
 
         self.init()
+
+        self.environment.set("t", TRUE)
+        self.environment.set("nil", FALSE)
 
     def init(self):
         # Define core functions
