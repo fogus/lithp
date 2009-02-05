@@ -34,11 +34,12 @@ class Scanner:
         elif token == '(':
             expr = []
             token = self.get_token()
-            
+
             while token != ')':
                 if token == '(':
                     # Start parsing again.
                     self.index = self.index - 1
+                    expr.append(self.get_sexpr())
                 elif token == None:
                     raise ValueError("Invalid end of expression")
                 else:
@@ -48,8 +49,8 @@ class Scanner:
 
             return List(expr)
         else:
-            return token                
-        
+            return token
+
 
     def get_token(self):
         if self.index >= self.length:
@@ -61,7 +62,7 @@ class Scanner:
 
         # Check if we had a string of whitespace
         if self.index == self.length:
-            return None       
+            return None
 
         if self.current() in Lisp.SPECIAL:
             self.next()
@@ -69,7 +70,7 @@ class Scanner:
             return self.previous()
         else:
             token_str = ""
-        
+
             # Build the token string
             while self.index < self.length - 1:
                 if self.current() in DELIM:
@@ -81,7 +82,7 @@ class Scanner:
             if not self.current() in DELIM:
                 token_str = token_str + self.current()
                 self.next()
-            
+
             if Integral.REGEX.match(token_str):
                 return Integral(int(token_str))
             elif Float.REGEX.match(token_str):
@@ -90,7 +91,7 @@ class Scanner:
                 return LongInt(int(token_str))
             else:
                 return Symbol(token_str)
-        
+
         return None
 
     def next(self):
