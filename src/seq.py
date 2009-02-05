@@ -26,6 +26,19 @@ class Seq(Eval):
     def __getitem__(self, e):
         pass
 
+    def __eq__(self, rhs):
+        if not isinstance(rhs, Seq):
+            return False
+
+        if len(self) != len(rhs):
+            return False
+
+        for i in range(len(self.data)):
+            if not self.data[i] == rhs.data[i]:
+                return False
+
+        return True
+
 
 class List(Seq):
     def __init__(self, l=None):

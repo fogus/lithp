@@ -12,7 +12,7 @@ class Lisp:
     3.  `cdr`
     4.  `cond`
     5.  `cons`
-    6.  `eq`        (done for Number, Atom)
+    6.  `eq`        (/) done
     7.  `quote`
 
     http://www-formal.stanford.edu/jmc/recursive.html
