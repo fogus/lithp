@@ -4,9 +4,9 @@ class Environment:
             self.binds = bnd
         else:
             self.binds = {}
-            
+
         self.parent = par
-        
+
         if par:
             self.level = self.parent.level + 1
         else:
@@ -27,11 +27,10 @@ class Environment:
             self.parent.set(key,value)
         else:
             self.binds[key] = value
-            
-    def __repr__( self):            
-        ret = "\n%s:\n" % self.level
+
+    def __repr__( self):
         keys = self.binds.keys()
-        
+
         for key in keys:
             ret = ret + " %5s: %s\n" % (key, self.binds[key])
 
