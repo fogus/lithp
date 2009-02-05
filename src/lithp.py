@@ -47,6 +47,7 @@ class Lithp(Lisp):
         self.environment.set( "print", Function( self.println))
         self.environment.set( "eq", Function( self.eq))
         self.environment.set( "quote", Function( self.quote))
+        self.environment.set( "car", Function( self.car))
 
     def usage(self):
         self.print_banner()

@@ -1,5 +1,6 @@
 from atom import TRUE
 from atom import FALSE
+from seq import Seq
 
 class Lisp:
     SPECIAL = "()'"
@@ -34,6 +35,17 @@ class Lisp:
             raise ValueError("Wrong number of arguments, expected {0}, got {1}".format(1, len(args)))
 
         return args[0]
+
+    def car(self, env, args):
+        if(len(args) > 1):
+            raise ValueError("Wrong number of arguments, expected {0}, got {1}".format(1, len(args)))
+
+        first_elem = args[0].eval(env)
+
+        if not isinstance(first_elem, Seq):
+            raise ValueError("Function not valid on non-sequence type.")
+
+        return first_elem.car()
 
     def println(self, env, args):
         for a in args:
