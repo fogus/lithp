@@ -1,5 +1,6 @@
 from atom import TRUE
 from atom import FALSE
+from atom import Symbol
 from seq import Seq
 
 class Lisp:
@@ -66,6 +67,19 @@ class Lisp:
         second = args[1].eval(env)
 
         return second.cons(first)
+
+    def atom(self, env, args):
+        if(len(args) > 1):
+            raise ValueError("Wrong number of arguments, expected {0}, got {1}".format(1, len(args)))
+
+        first = args[0].eval(env)
+
+        if first == FALSE:
+            return TRUE
+        elif isinstance(first, Symbol):
+            return TRUE
+
+        return FALSE
 
     def println(self, env, args):
         for a in args:
