@@ -3,17 +3,17 @@ from atom import FALSE
 from seq import Seq
 
 class Lisp:
-    SPECIAL = "()'"
+    SPECIAL = "()"
 
     """
     The original Lisp described by McCarthy in his 1960 paper describes the following function set:
     1.  `atom`
-    2.  `car`
-    3.  `cdr`
+    2.  `car`     (/) done
+    3.  `cdr`     (/) done
     4.  `cond`
-    5.  `cons`
-    6.  `eq`        (/) done
-    7.  `quote`
+    5.  `cons`    (/) done
+    6.  `eq`      (/) done
+    7.  `quote`   (/) done
 
     http://www-formal.stanford.edu/jmc/recursive.html
     """

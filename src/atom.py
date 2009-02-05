@@ -1,4 +1,6 @@
 from interface import Eval
+from seq import List
+
 
 class Atom(Eval):
     def __init__( self, d):
@@ -35,4 +37,4 @@ class String(Atom):
         return self.string
 
 TRUE = Symbol("t")
-FALSE = Symbol("nil")
+FALSE = List()
