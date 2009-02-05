@@ -46,9 +46,9 @@ class List(Seq):
             return List([])
 
     def cons(self, e):
-        n = List(self.data[:])
-        ndata.insert(0, e)
-        return n
+        ret = List(self.data)
+        ret.data.insert(0, e)
+        return ret
 
     def eval(self, env, args=None):
         form = self.car().eval(env)
