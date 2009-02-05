@@ -22,9 +22,13 @@ class Lisp:
         print("I do nothing, but you gave me: ")
         self.println(env, args)
 
+    # (cond ((atom (quote foo)) (quote foo)) ((atom (quote (1 2))) (quote bar)) (t (quote baz)))
     def cond(self, env, args):
-        print("doing cond")
-        print(args)
+        for test in args:
+            result = test.car().eval(env)
+
+            print(result)
+
         return FALSE
 
     def eq(self, env, args):
