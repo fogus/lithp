@@ -93,7 +93,7 @@ class Lithp(Lisp):
             return sexpr.eval(self.environment)
         except ValueError as err:
             print(err)
-            return None
+            return FALSE
 
     def get_complete_command(self, line="", depth=0):
         if line != "":
