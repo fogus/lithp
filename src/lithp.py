@@ -16,7 +16,7 @@ from atom import FALSE
 
 
 NAME = "Lithp"
-VERSION = "v0.0.2"
+VERSION = "v0.0.9"
 PROMPT = "lithp"
 DEPTH_MARK = "."
 

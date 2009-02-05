@@ -29,6 +29,7 @@ class Environment:
             self.binds[key] = value
 
     def __repr__( self):
+        ret = "\nEnvironment %s:\n" % self.level
         keys = self.binds.keys()
 
         for key in keys:
