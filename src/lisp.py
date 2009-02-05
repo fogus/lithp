@@ -12,7 +12,7 @@ class Lisp:
     3.  `cdr`
     4.  `cond`
     5.  `cons`
-    6.  `eq`        (done for Number)
+    6.  `eq`        (done for Number, Atom)
     7.  `quote`
 
     http://www-formal.stanford.edu/jmc/recursive.html
@@ -25,7 +25,7 @@ class Lisp:
         if len(args) > 2:
             raise ValueError("Wrong number of arguments, expected {0}, got {1}".format(2, len(args)))
 
-        if args[0] == args[1]:
+        if args[0].eval(env) == args[1].eval(env):
             return TRUE
 
         return FALSE
