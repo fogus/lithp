@@ -97,4 +97,4 @@ class Lisp:
             self.stdout.write( "%s " % str( result))
 
         self.stdout.write( "\n")
-        return True
+        return TRUE
