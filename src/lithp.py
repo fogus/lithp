@@ -51,6 +51,7 @@ class Lithp(Lisp):
         self.environment.set( "cdr", Function( self.cdr))
         self.environment.set( "cons", Function( self.cons))
         self.environment.set( "atom", Function( self.atom))
+        self.environment.set( "cond", Function( self.cond))
 
     def usage(self):
         self.print_banner()

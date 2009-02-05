@@ -8,7 +8,7 @@ class Lisp:
 
     """
     The original Lisp described by McCarthy in his 1960 paper describes the following function set:
-    1.  `atom`
+    1.  `atom`    (/) done
     2.  `car`     (/) done
     3.  `cdr`     (/) done
     4.  `cond`
@@ -21,6 +21,11 @@ class Lisp:
     def dummy(self, env, args):
         print("I do nothing, but you gave me: ")
         self.println(env, args)
+
+    def cond(self, env, args):
+        print("doing cond")
+        print(args)
+        return FALSE
 
     def eq(self, env, args):
         if len(args) > 2:
