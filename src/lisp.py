@@ -11,7 +11,7 @@ class Lisp:
     1.  `atom`    (/) done
     2.  `car`     (/) done
     3.  `cdr`     (/) done
-    4.  `cond`
+    4.  `cond`    (/) done
     5.  `cons`    (/) done
     6.  `eq`      (/) done
     7.  `quote`   (/) done

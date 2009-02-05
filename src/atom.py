@@ -31,10 +31,10 @@ class String(Atom):
         super(String, self).__init__(str)
 
     def __repr__(self):
-        return repr(self.string)
+        return repr(self.data)
 
     def eval(self, env, args=None):
-        return self.string
+        return self
 
 TRUE = Symbol("t")
 FALSE = List()

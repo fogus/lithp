@@ -68,6 +68,17 @@ class Scanner:
             self.next()
 
             return self.previous()
+        elif self.current() == '"':
+            # Parse a string.
+            str = ""
+            self.next()
+
+            while self.current() != '"' and self.index < self.length:
+                str = str + self.current()
+                self.next()
+
+            self.next()
+            return String(str)
         else:
             token_str = ""
 
