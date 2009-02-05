@@ -38,7 +38,7 @@ class Scanner:
             while token != ')':
                 if token == '(':
                     # Start parsing again.
-                    prev()
+                    self.prev()
                     expr.append(self.get_sexpr())
                 elif token == None:
                     raise ValueError("Invalid end of expression")
