@@ -38,7 +38,7 @@ class Scanner:
             while token != ')':
                 if token == '(':
                     # Start parsing again.
-                    self.index = self.index - 1
+                    prev()
                     expr.append(self.get_sexpr())
                 elif token == None:
                     raise ValueError("Invalid end of expression")
@@ -96,6 +96,9 @@ class Scanner:
 
     def next(self):
         self.index = self.index + 1
+
+    def prev(self):
+        self.index = self.index - 1
 
     def current(self):
         return self.raw_source[self.index]
