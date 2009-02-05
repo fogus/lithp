@@ -58,6 +58,15 @@ class Lisp:
 
         return first_elem.cdr()
 
+    def cons(self, env, args):
+        if(len(args) > 2):
+            raise ValueError("Wrong number of arguments, expected {0}, got {1}".format(2, len(args)))
+
+        first = args[0].eval(env)
+        second = args[1].eval(env)
+
+        return second.cons(first)
+
     def println(self, env, args):
         for a in args:
             result = a.eval(env)
