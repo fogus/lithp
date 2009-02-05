@@ -47,6 +47,17 @@ class Lisp:
 
         return first_elem.car()
 
+    def cdr(self, env, args):
+        if(len(args) > 1):
+            raise ValueError("Wrong number of arguments, expected {0}, got {1}".format(1, len(args)))
+
+        first_elem = args[0].eval(env)
+
+        if not isinstance(first_elem, Seq):
+            raise ValueError("Function not valid on non-sequence type.")
+
+        return first_elem.cdr()
+
     def println(self, env, args):
         for a in args:
             result = a.eval(env)
