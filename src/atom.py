@@ -24,3 +24,6 @@ class String(Eval):
 
     def eval(self, env, args=None):
         return self.string
+
+TRUE = Symbol("t")
+FALSE = Symbol("nil")

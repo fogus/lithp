@@ -1,3 +1,6 @@
+from atom import TRUE
+from atom import FALSE
+
 class Lisp:
     SPECIAL = "()'"
 
@@ -21,7 +24,10 @@ class Lisp:
         if len(args) > 2:
             raise ValueError("Wrong number of arguments, expected {0}, got {1}".format(2, len(args)))
 
-        return (args[0] == args[1])
+        if args[0] == args[1]:
+            return TRUE
+
+        return FALSE
 
     def quote(self, env, args):
         if(len(args) > 1):
