@@ -67,6 +67,12 @@ class Lithp(Lisp):
     def print_banner(self):
         print("The ", NAME, " programming shell ", VERSION)
         print("   by Fogus, http://fogus.me")
+        print("   Type :help for more information")
+
+    def print_help(self):
+        print("Help for Lithp v", VERSION)
+        print("  Type :help for more information")
+        print("  Type :quit to exit the interpreter")
 
     def repl(self):
         print(self.environment)
@@ -74,10 +80,13 @@ class Lithp(Lisp):
         while True:
             source = self.get_complete_command() # Stealing a line from CLIPS
 
-            if source in ["(quit)"]: # `quit` is not in the original Lisp either, but alas
+            # Check for any REPL directives
+            if source in [":quit"]:
                 break
-
-            self.process(source)
+            elif source in [":help"]:
+                self.print_help()
+            else:
+                self.process(source)
 
     def process(self, source):
         sexpr = self.rdr.get_sexpr(source)
