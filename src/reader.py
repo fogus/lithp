@@ -9,7 +9,7 @@ from seq import List
 
 DELIM = string.whitespace + Lisp.SPECIAL
 
-class Scanner:
+class Reader:
     def __init__(self, str=None):
        print("Initializing the scanner...")
        self.raw_source = str

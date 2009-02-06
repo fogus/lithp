@@ -9,7 +9,7 @@
 import getopt, sys
 from lisp import Lisp
 from env import Environment
-from scanner import Scanner
+from reader import Reader
 from function import Function
 from atom import TRUE
 from atom import FALSE
@@ -40,7 +40,7 @@ class Lithp(Lisp):
         self.verbose = True
         self.print_banner()
 
-        self.scanner = Scanner()
+        self.rdr = Reader()
         self.environment = Environment()
 
         self.init()
@@ -80,13 +80,13 @@ class Lithp(Lisp):
             self.process(source)
 
     def process(self, source):
-        sexpr = self.scanner.get_sexpr(source)
+        sexpr = self.rdr.get_sexpr(source)
 
         while sexpr:
             if self.verbose:
                 self.stdout.write( "    %s\n" % self.eval( sexpr))
 
-            sexpr = self.scanner.get_sexpr()
+            sexpr = self.rdr.get_sexpr()
 
     def eval( self, sexpr):
         try:
