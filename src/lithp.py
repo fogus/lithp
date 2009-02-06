@@ -85,6 +85,9 @@ class Lithp(Lisp):
                 break
             elif source in [":help"]:
                 self.print_help()
+            elif source.startswith(":load"):
+                files = source.split(" ")[1:]
+                self.process_files(files)
             else:
                 self.process(source)
 
