@@ -93,5 +93,4 @@ class Lisp:
         return FALSE
 
     def lambda_(self, env, args):
-        print("Doing lambda here")
-        return FALSE
+        return Lambda(env, args[0], args[1:])

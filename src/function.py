@@ -1,4 +1,6 @@
 from interface import Eval
+from atom import FALSE
+
 
 class Function(Eval):
     def __init__(self, fn):
@@ -12,11 +14,15 @@ class Function(Eval):
 
 
 class Lambda(Eval):
-    def __init__(self, fn):
-        pass
+    def __init__(self, e, a, b):
+        self.env =  e
+        self.args = a
+        self.body = b
 
     def __repr__( self):
-        pass
+        return "<lambda %s>" % id(self)
 
     def eval(self, env, args):
-        pass
+        print("foo")
+
+        return FALSE
