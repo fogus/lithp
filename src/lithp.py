@@ -38,7 +38,6 @@ class Lithp(Lisp):
 
         self.debug = False
         self.verbose = True
-        self.print_banner()
 
         self.rdr = Reader()
         self.environment = Environment()
@@ -50,14 +49,14 @@ class Lithp(Lisp):
 
     def init(self):
         # Define core functions
-        self.environment.set( "print", Function( self.println))
-        self.environment.set( "eq", Function( self.eq))
-        self.environment.set( "quote", Function( self.quote))
-        self.environment.set( "car", Function( self.car))
-        self.environment.set( "cdr", Function( self.cdr))
-        self.environment.set( "cons", Function( self.cons))
-        self.environment.set( "atom", Function( self.atom))
-        self.environment.set( "cond", Function( self.cond))
+        self.environment.set( "eq", Function(self.eq))
+        self.environment.set( "quote", Function(self.quote))
+        self.environment.set( "car", Function(self.car))
+        self.environment.set( "cdr", Function(self.cdr))
+        self.environment.set( "cons", Function(self.cons))
+        self.environment.set( "atom", Function(self.atom))
+        self.environment.set( "cond", Function(self.cond))
+        self.environment.set( "lambda", Function(self.lambda_))
 
     def usage(self):
         self.print_banner()
@@ -72,6 +71,7 @@ class Lithp(Lisp):
     def print_help(self):
         print("Help for Lithp v", VERSION)
         print("  Type :help for more information")
+        print("  Type :load followed by one or more filenames to load source files")
         print("  Type :quit to exit the interpreter")
 
     def repl(self):
@@ -167,7 +167,7 @@ if __name__ == '__main__':
     for opt,arg in opts:
         if opt in ("--help", "-h"):
             lithp.usage()
-            sys.exit( 0)
+            sys.exit(0)
         elif opt in ("--debug", "-d"):
             lithp.verbose = True
         else:
@@ -178,4 +178,5 @@ if __name__ == '__main__':
         lithp.process_files(files)
         lithp.verbose = True
 
+    lithp.print_banner()
     lithp.repl()

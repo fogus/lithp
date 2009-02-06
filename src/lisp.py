@@ -91,10 +91,6 @@ class Lisp:
 
         return FALSE
 
-    def println(self, env, args):
-        for a in args:
-            result = a.eval(env)
-            self.stdout.write( "%s " % str( result))
-
-        self.stdout.write( "\n")
-        return TRUE
+    def lambda_(self, env, args):
+        print("Doing lambda here")
+        return FALSE
