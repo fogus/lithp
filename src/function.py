@@ -9,3 +9,14 @@ class Function(Eval):
 
     def eval(self, env, args):
         return self.fn(env, args)
+
+
+class Lambda(Eval):
+    def __init__(self, fn):
+        pass
+
+    def __repr__( self):
+        pass
+
+    def eval(self, env, args):
+        pass
