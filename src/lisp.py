@@ -17,6 +17,10 @@ class Lisp:
     6.  `eq`      (/) done
     7.  `quote`   (/) done
 
+    Plus two special forms:
+    1.  `lambda`  (/) done
+    2.  `label`
+
     http://www-formal.stanford.edu/jmc/recursive.html
     """
     def dummy(self, env, args):
@@ -70,6 +74,7 @@ class Lisp:
 
         return first_elem.cdr()
 
+    # (cons (quote a) (cons (quote b) (cons (quote c) (quote ()))))
     def cons(self, env, args):
         if(len(args) > 2):
             raise ValueError("Wrong number of arguments, expected {0}, got {1}".format(2, len(args)))
@@ -94,3 +99,10 @@ class Lisp:
 
     def lambda_(self, env, args):
         return Lambda(env, args[0], args[1:])
+
+    def label(self, env, args):
+        if(len(args) != 2):
+            raise ValueError("Wrong number of arguments, expected {0}, got {1}".format(2, len(args)))
+
+        env.set(args[0].data, args[1].eval(env))
+        return env.get(args[0].data)

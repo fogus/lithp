@@ -54,7 +54,10 @@ class Lithp(Lisp):
         self.environment.set( "cons", Function(self.cons))
         self.environment.set( "atom", Function(self.atom))
         self.environment.set( "cond", Function(self.cond))
+
+        # Special forms
         self.environment.set( "lambda", Function(self.lambda_))
+        self.environment.set( "label", Function(self.label))
 
         # Define core symbols
         self.environment.set("t", TRUE)
