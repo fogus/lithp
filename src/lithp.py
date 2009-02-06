@@ -162,7 +162,7 @@ if __name__ == '__main__':
             print("unknown option " + opt)
 
     if len(files) > 0:
-        lithp.verbose = True
+        lithp.verbose = False
         lithp.process_files(files)
         lithp.verbose = True
 
