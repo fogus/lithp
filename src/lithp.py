@@ -18,6 +18,7 @@ from atom import FALSE
 NAME = "Lithp"
 VERSION = "v0.0.9"
 PROMPT = "lithp"
+ME = PROMPT
 DEPTH_MARK = "."
 
 INVALID_OPS = 1
@@ -44,9 +45,6 @@ class Lithp(Lisp):
 
         self.init()
 
-        self.environment.set("t", TRUE)
-        self.environment.set("nil", FALSE)
-
     def init(self):
         # Define core functions
         self.environment.set( "eq", Function(self.eq))
@@ -57,6 +55,13 @@ class Lithp(Lisp):
         self.environment.set( "atom", Function(self.atom))
         self.environment.set( "cond", Function(self.cond))
         self.environment.set( "lambda", Function(self.lambda_))
+
+        # Define core symbols
+        self.environment.set("t", TRUE)
+        self.environment.set("nil", FALSE)
+
+        # Define meta-elements
+        self.environment.set(ME, self)
 
     def usage(self):
         self.print_banner()
