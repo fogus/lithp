@@ -14,15 +14,20 @@ class Function(Eval):
 
 
 class Lambda(Eval):
-    def __init__(self, e, a, b):
-        self.env =  e
-        self.args = a
-        self.body = b
+    def __init__(self, e, bnd, b):
+        self.env =   e
+        self.binds = bnd
+        self.body =  b
 
     def __repr__( self):
         return "<lambda %s>" % id(self)
 
     def eval(self, env, args):
-        print("foo")
+        for arg in args:
+            env.put(self.binds[i].data, args[i].eval(env))
 
-        return FALSE
+        ret = FALSE
+        for form in self.body:
+            ret = form.eval(env)
+
+        return ret
