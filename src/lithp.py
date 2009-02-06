@@ -6,7 +6,7 @@
 #   http://www.python.org/dev/peps/
 #   http://www.python.org/dev/peps/pep-0008/
 
-import getopt, sys
+import getopt, sys, io
 from lisp import Lisp
 from env import Environment
 from reader import Reader
@@ -131,6 +131,15 @@ class Lithp(Lisp):
 
         return line
 
+    def process_files(self, files):
+        for filename in files:
+            infile = open( filename, 'r')
+            src = infile.readlines()
+
+            for line in src:
+                self.process(line)
+
+        infile.close()
 
 if __name__ == '__main__':
     lithp = Lithp()
@@ -151,5 +160,10 @@ if __name__ == '__main__':
             lithp.verbose = True
         else:
             print("unknown option " + opt)
+
+    if len(files) > 0:
+        lithp.verbose = True
+        lithp.process_files(files)
+        lithp.verbose = True
 
     lithp.repl()
