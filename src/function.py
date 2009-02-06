@@ -12,7 +12,8 @@ class Function(Eval):
     def eval(self, env, args):
         return self.fn(env, args)
 
-
+# ((lambda (x) x) 42)
+# ((lambda (x y) (eq x y)) 42 138)
 class Lambda(Eval):
     def __init__(self, e, bnd, b):
         self.env =   e
@@ -23,8 +24,13 @@ class Lambda(Eval):
         return "<lambda %s>" % id(self)
 
     def eval(self, env, args):
-        for arg in args:
-            env.put(self.binds[i].data, args[i].eval(env))
+        values = [a for a in args]
+
+        if len(values) != len(self.binds):
+            raise ValueError("Wrong number of arguments, expected {0}, got {1}".format(len(self.binds), len(args)))
+
+        for i in range(len(values)):
+            env.set(self.binds[i].data, values[i].eval(env))
 
         ret = FALSE
         for form in self.body:
