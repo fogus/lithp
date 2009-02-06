@@ -76,12 +76,11 @@ class Lithp(Lisp):
     def print_help(self):
         print("Help for Lithp v", VERSION)
         print("  Type :help for more information")
+        print("  Type :env to see the bindings in the current environment")
         print("  Type :load followed by one or more filenames to load source files")
         print("  Type :quit to exit the interpreter")
 
     def repl(self):
-        print(self.environment)
-
         while True:
             source = self.get_complete_command() # Stealing a line from CLIPS
 
@@ -93,6 +92,8 @@ class Lithp(Lisp):
             elif source.startswith(":load"):
                 files = source.split(" ")[1:]
                 self.process_files(files)
+            elif source in [":env"]:
+                print(self.environment)
             else:
                 self.process(source)
 
