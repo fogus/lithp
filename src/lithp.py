@@ -128,7 +128,8 @@ class Lithp(Lisp):
             else:
                 prompt = PROMPT + "%s " % (DEPTH_MARK * (depth+1))
 
-            line = line  + self.read_line(prompt)
+            line = line + self.read_line(prompt)
+
             balance = 0                    # Used to balance the parens
             for ch in line:
                 if ch == "(":
@@ -143,10 +144,15 @@ class Lithp(Lisp):
                 return line
 
     def read_line( self, prompt) :
-        if prompt :
+        if prompt and self.verbose:
             self.stdout.write("%s" % prompt)
             self.stdout.flush()
+
         line = self.stdin.readline()
+
+        if(len(line) == 0):
+            return "EOF"
+
         if line[-1] == "\n":
             line = line[:-1]
 
@@ -155,12 +161,17 @@ class Lithp(Lisp):
     def process_files(self, files):
         for filename in files:
             infile = open( filename, 'r')
-            src = infile.readlines()
+            self.stdin = infile
 
-            for line in src:
-                self.process(line)
+            source = self.get_complete_command()
+            while(source not in ["EOF"]):
+                self.process(source)
 
-        infile.close()
+                source = self.get_complete_command()
+
+            infile.close()
+        self.stdin = sys.stdin
+
 
 if __name__ == '__main__':
     lithp = Lithp()
@@ -183,9 +194,7 @@ if __name__ == '__main__':
             print("unknown option " + opt)
 
     if len(files) > 0:
-        lithp.verbose = False
         lithp.process_files(files)
-        lithp.verbose = True
 
     lithp.print_banner()
     lithp.repl()

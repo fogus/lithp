@@ -41,7 +41,7 @@ class Reader:
                     self.prev()
                     expr.append(self.get_sexpr())
                 elif token == None:
-                    raise ValueError("Invalid end of expression")
+                    raise ValueError("Invalid end of expression: ", self.raw_source)
                 else:
                     expr.append(token)
 
