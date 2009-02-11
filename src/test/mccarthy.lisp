@@ -11,3 +11,6 @@
              (cond (x (quote ()))
                    (t (quote t)))))
 
+(label append (lambda (x y)
+                (cond ((null x) y)
+                      (t (cons (car x) (append (cdr x) y))))))
