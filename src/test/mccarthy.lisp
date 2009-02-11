@@ -6,3 +6,8 @@
                      (cond (y (quote t))
                            (t (quote ()))))
                    (t (quote ())))))
+
+(label not (lambda (x)
+             (cond (x (quote ()))
+                   (t (quote t)))))
+
