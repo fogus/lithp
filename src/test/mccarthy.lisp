@@ -14,3 +14,6 @@
 (label append (lambda (x y)
                 (cond ((null x) y)
                       (t (cons (car x) (append (cdr x) y))))))
+
+(label list (lambda (x y)
+               (cons x (cons y (quote ())))))
