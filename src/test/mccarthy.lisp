@@ -16,4 +16,10 @@
                       (t (cons (car x) (append (cdr x) y))))))
 
 (label list (lambda (x y)
-               (cons x (cons y (quote ())))))
+              (cons x (cons y (quote ())))))
+
+(label pair (lambda (x y)
+              (cond ((and (null x) (null y)) (quote ()))
+                    ((and (not (atom x)) (not (atom y)))
+                        (cons (list (car x) (car y))
+                                (pair (cdr x) (cdr y)))))))
