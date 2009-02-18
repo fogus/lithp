@@ -2,8 +2,6 @@
               (eq x (quote ()))))
 
 (label and (lambda (x y)
-             (print "x is " x)
-             (print "y is " y)
              (cond (x
                     (cond (y (quote t))
                           (t (quote ()))))
@@ -25,3 +23,7 @@
                     ((and (not (atom x)) (not (atom y)))
                      (cons (list (car x) (car y))
                            (pair (cdr x) (cdr y)))))))
+
+(label assoc (lambda (x y)
+               (cond ((eq (car (car y)) x) (car (cdr (car y))))
+                     (t (assoc x (cdr y))))))
