@@ -2,6 +2,8 @@
               (eq x (quote ()))))
 
 (label and (lambda (x y)
+             (print "x is " x)
+             (print "y is " y)
              (cond (x
                     (cond (y (quote t))
                           (t (quote ()))))

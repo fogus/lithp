@@ -28,6 +28,12 @@ class Environment:
         else:
             self.binds[key] = value
 
+    def push(self, bnd):
+        return Environment(self, bnd)
+
+    def pop(self):
+        return self.parent
+
     def __repr__( self):
         ret = "\nEnvironment %s:\n" % self.level
         keys = self.binds.keys()

@@ -54,6 +54,7 @@ class Lithp(Lisp):
         self.environment.set( "cons", Function(self.cons))
         self.environment.set( "atom", Function(self.atom))
         self.environment.set( "cond", Function(self.cond))
+        self.environment.set( "print", Function( self.println))
 
         # Special forms
         self.environment.set( "lambda", Function(self.lambda_))
@@ -82,6 +83,15 @@ class Lithp(Lisp):
         print("  Type :env to see the bindings in the current environment")
         print("  Type :load followed by one or more filenames to load source files")
         print("  Type :quit to exit the interpreter")
+
+    def push(self, env):
+        if env:
+            self.environment = self.environment.push(env)
+        else:
+            self.environment = self.environment.push()
+
+    def pop(self):
+        self.environment = self.environment.pop()
 
     def repl(self):
         while True:
