@@ -7,18 +7,16 @@
 #   http://www.python.org/dev/peps/pep-0008/
 
 import getopt, sys, io
-from lisp import Lisp
 from env import Environment
-from reader import Reader
 from function import Function
 from atom import TRUE
 from atom import FALSE
-
+from lisp import Lisp
+from reader import Reader
 
 NAME = "Lithp"
 VERSION = "v0.0.9"
 PROMPT = "lithp"
-ME = PROMPT
 DEPTH_MARK = "."
 
 INVALID_OPS = 1
@@ -65,7 +63,7 @@ class Lithp(Lisp):
         self.environment.set("nil", FALSE)
 
         # Define meta-elements
-        self.environment.set(ME, self)
+        self.environment.set("lithp", self)
 
     def usage(self):
         self.print_banner()
@@ -84,7 +82,7 @@ class Lithp(Lisp):
         print("  Type :load followed by one or more filenames to load source files")
         print("  Type :quit to exit the interpreter")
 
-    def push(self, env):
+    def push(self, env=None):
         if env:
             self.environment = self.environment.push(env)
         else:

@@ -28,7 +28,7 @@ class Environment:
         else:
             self.binds[key] = value
 
-    def push(self, bnd):
+    def push(self, bnd=None):
         return Environment(self, bnd)
 
     def pop(self):

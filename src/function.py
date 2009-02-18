@@ -31,11 +31,21 @@ class Lambda(Eval):
         if len(values) != len(self.binds):
             raise ValueError("Wrong number of arguments, expected {0}, got {1}".format(len(self.binds), len(args)))
 
+        ME = env.get("lithp")
+
+        if self.env:
+            ME.push(self.env.binds)
+        else:
+            ME.push()
+
         for i in range(len(values)):
-            env.set(self.binds[i].data, values[i].eval(env))
+            ME.environment.binds[self.binds[i].data] = values[i].eval(env)
 
         ret = FALSE
         for form in self.body:
-            ret = form.eval(env)
+            ret = form.eval(ME.environment)
 
+        ME.pop()
         return ret
+
+import lithp

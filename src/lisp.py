@@ -106,7 +106,7 @@ class Lisp:
         return FALSE
 
     def lambda_(self, env, args):
-        return Lambda(env, args[0], args[1:])
+        return Lambda(None, args[0], args[1:])
 
     def label(self, env, args):
         if(len(args) != 2):
