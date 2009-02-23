@@ -112,8 +112,10 @@ class Lithp(Lisp):
         sexpr = self.rdr.get_sexpr(source)
 
         while sexpr:
+            result = self.eval( sexpr)
+
             if self.verbose:
-                self.stdout.write( "    %s\n" % self.eval( sexpr))
+                self.stdout.write( "    %s\n" % result)
 
             sexpr = self.rdr.get_sexpr()
 
@@ -167,6 +169,8 @@ class Lithp(Lisp):
         return line
 
     def process_files(self, files):
+        self.verbose = False
+
         for filename in files:
             infile = open( filename, 'r')
             self.stdin = infile
@@ -180,6 +184,7 @@ class Lithp(Lisp):
             infile.close()
         self.stdin = sys.stdin
 
+        self.verbose = True
 
 if __name__ == '__main__':
     lithp = Lithp()
