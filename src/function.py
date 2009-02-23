@@ -22,9 +22,9 @@ class Function(Eval):
 # (label x (pair (quote (a)) (quote (1))))
 # (label x (pair (quote (a)) (quote (1))))
 class Lambda(Eval):
-    def __init__(self, e, bnd, b):
+    def __init__(self, e, n, b):
         self.env =   e
-        self.binds = bnd
+        self.names = n
         self.body =  b
 
     def __repr__( self):
@@ -33,24 +33,26 @@ class Lambda(Eval):
     def eval(self, env, args):
         values = [a for a in args]
 
-        if len(values) != len(self.binds):
-            raise ValueError("Wrong number of arguments, expected {0}, got {1}".format(len(self.binds), len(args)))
+        if len(values) != len(self.names):
+            raise ValueError("Wrong number of arguments, expected {0}, got {1}".format(len(self.names), len(args)))
 
-        ME = env.get("lithp")
+        LITHP = env.get("lithp")
+
+        print(self.names)
 
         if self.env:
-            ME.push(self.env.binds)
+            LITHP.push(self.env.binds)
         else:
-            ME.push()
+            LITHP.push()
 
         for i in range(len(values)):
-            ME.environment.binds[self.binds[i].data] = values[i].eval(env)
+            LITHP.environment.binds[self.names[i].data] = values[i].eval(LITHP.environment)
 
         ret = FALSE
         for form in self.body:
-            ret = form.eval(ME.environment)
+            ret = form.eval(LITHP.environment)
 
-        ME.pop()
+        LITHP.pop()
         return ret
 
 import lithp
