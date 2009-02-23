@@ -63,7 +63,7 @@ class Lithp(Lisp):
         self.environment.set("nil", FALSE)
 
         # Define meta-elements
-        self.environment.set("lithp", self)
+        self.environment.set("__lithp__", self)
 
     def usage(self):
         self.print_banner()

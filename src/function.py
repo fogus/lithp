@@ -36,7 +36,7 @@ class Lambda(Eval):
         if len(values) != len(self.names):
             raise ValueError("Wrong number of arguments, expected {0}, got {1}".format(len(self.names), len(args)))
 
-        LITHP = env.get("lithp")
+        LITHP = env.get("__lithp__")
 
         print(self.names)
 
