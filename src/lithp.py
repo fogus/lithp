@@ -15,7 +15,7 @@ from lisp import Lisp
 from reader import Reader
 
 NAME = "Lithp"
-VERSION = "v0.0.9"
+VERSION = "v0.1.0"
 PROMPT = "lithp"
 DEPTH_MARK = "."
 
