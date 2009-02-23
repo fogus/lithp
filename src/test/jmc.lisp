@@ -27,3 +27,10 @@
 (label assoc (lambda (x y)
                (cond ((eq (car (car y)) x) (car (cdr (car y))))
                      (t (assoc x (cdr y))))))
+
+(label caar (lambda (x) (car (car x))))
+(label cadr (lambda (x) (car (cdr x))))
+(label caddr (lambda (x) (car (cdr (cdr x)))))
+(label cadar (lambda (x) (car (cdr (car x)))))
+(label caddar (lambda (x) (car (cdr (cdr (car x))))))
+
