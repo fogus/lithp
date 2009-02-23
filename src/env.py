@@ -28,6 +28,12 @@ class Environment:
         else:
             self.binds[key] = value
 
+    def definedp(self, key):
+        if key in self.binds.keys():
+            return True
+
+        return False
+
     def push(self, bnd=None):
         return Environment(self, bnd)
 

@@ -108,6 +108,7 @@ class Lisp:
     def lambda_(self, env, args):
         return Lambda(None, args[0], args[1:])
 
+    # (label x (pair (quote (a)) (quote (1))))
     def label(self, env, args):
         if(len(args) != 2):
             raise ValueError("Wrong number of arguments, expected {0}, got {1}".format(2, len(args)))
