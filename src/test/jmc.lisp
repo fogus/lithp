@@ -59,3 +59,12 @@
             (append. (pair (cadar e) (evlis (cdr e) a))
                      a))))))
 
+(label evcon (lambda (c a)
+  (cond ((eval (caar c) a)
+         (eval (cadar c) a))
+        (t (evcon (cdr c) a)))))
+
+(label evlis (lambda (m a)
+  (cond ((null m) (quote ()))
+        (t (cons (eval  (car m) a)
+                 (evlis (cdr m) a))))))
