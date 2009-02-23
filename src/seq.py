@@ -59,7 +59,7 @@ class List(Seq):
             return List([])
 
     def cons(self, e):
-        ret = List(self.data)
+        ret = List(self.data[:]) # bugfix 1
         ret.data.insert(0, e)
         return ret
 

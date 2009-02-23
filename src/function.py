@@ -7,7 +7,7 @@ class Function(Eval):
         self.fn = fn
 
     def __repr__( self):
-        return "<built-in function %s>" % id( self.fn)
+        return "<built-in function %s>" % id(self.fn)
 
     def eval(self, env, args):
         return self.fn(env, args)
@@ -37,8 +37,6 @@ class Lambda(Eval):
             raise ValueError("Wrong number of arguments, expected {0}, got {1}".format(len(self.names), len(args)))
 
         LITHP = env.get("__lithp__")
-
-        print(self.names)
 
         if self.env:
             LITHP.push(self.env.binds)
