@@ -1,9 +1,9 @@
-from interface import Eval
-from seq import List
+from interface import Eval, Egal
+from seq import Seq, List
 
 
-class Atom(Eval):
-    def __init__( self, d):
+class Atom(Eval, Egal):
+    def __init__(self, d):
         self.data = d
 
     def __eq__(self, rhs):
@@ -26,7 +26,7 @@ class Symbol(Atom):
         return env.get(self.data)
 
 
-class String(Atom):
+class String(Atom, Seq):
     def __init__(self, str):
         super(String, self).__init__(str)
 

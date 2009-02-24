@@ -1,6 +1,6 @@
-from interface import Eval
+from interface import Eval, Egal
 
-class Seq(Eval):
+class Seq(Eval, Egal):
     def __init__( self):
         self.data = None
 
