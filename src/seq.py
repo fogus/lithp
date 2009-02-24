@@ -12,7 +12,7 @@ class Seq(Eval, Egal):
         raise UnimplementedFunctionError("Function not yet implemented for ", self.__class__.__name__)
 
     def cons(self):
-        raise UnimplementedFunctionError("Function not yet implemented for ", self.__class__)
+        raise UnimplementedFunctionError("Function not yet implemented for ", self.__class__.__name__)
 
     # The following four functions needed for iterability
     def __iter__(self):

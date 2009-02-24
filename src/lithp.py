@@ -13,7 +13,7 @@ from atom import TRUE
 from atom import FALSE
 from lisp import Lisp
 from reader import Reader
-from error import UnimplementedFunctionError
+from error import Error
 
 NAME = "Lithp"
 VERSION = "v0.1.0"
@@ -115,8 +115,8 @@ class Lithp(Lisp):
 
             try:
                 result = self.eval( sexpr)
-            except UnimplementedFunctionError as ufe:
-                print(ufe)
+            except Error as err:
+                print(err)
 
             if self.verbose:
                 self.stdout.write( "    %s\n" % result)
