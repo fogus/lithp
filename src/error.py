@@ -8,7 +8,7 @@ class UnimplementedFunctionError(Error):
         self.message = message
 
     def __str__(self):
-        return message + ", " + repr(self.args)
+        return self.message + ", " + repr(self.args)
 
 class EvaluationError(Error):
     def __init__(self, env, args, message):
@@ -17,4 +17,4 @@ class EvaluationError(Error):
         self.message = message
 
     def __str__(self):
-        return message + ", " + repr(self.args) + " in environment " + env.level
+        return self.message + ", " + repr(self.args) + " in environment " + self.env.level
