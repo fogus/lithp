@@ -1,3 +1,4 @@
+# Created for bugfix #1235485607
 class Error(Exception):
     """Base class for exceptions in this module."""
     pass
