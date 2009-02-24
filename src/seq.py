@@ -1,4 +1,5 @@
 from interface import Eval, Egal
+from error import UnimplementedFunctionError
 
 class Seq(Eval, Egal):
     def __init__( self):
@@ -8,10 +9,10 @@ class Seq(Eval, Egal):
         return self.data[0]
 
     def cdr(self):
-        pass
+        raise UnimplementedFunctionError(self.__class__.__name__, "Function not yet implemented")
 
     def cons(self):
-        pass
+        raise UnimplementedFunctionError(self.__class__.__name__, "Function not yet implemented")
 
     # The following four functions needed for iterability
     def __iter__(self):

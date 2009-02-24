@@ -1,8 +1,10 @@
+from error import UnimplementedFunctionError, EvaluationError
+
 class Eval:
     def eval(self, environment, args=None):
-        raise Error ["Unimplemented"]
+        raise EvaluationError(environment, args, "Evaluation error")
 
 class Egal:
     def __eq__(self, rhs):
-        raise Error ["Unimplemented"]
+        raise UnimplementedFunctionError(rhs, "Function not yet implemented")
 
