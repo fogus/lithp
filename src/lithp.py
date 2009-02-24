@@ -19,8 +19,6 @@ VERSION = "v0.1.0"
 PROMPT = "lithp"
 DEPTH_MARK = "."
 
-INVALID_OPS = 1
-
 class Lithp(Lisp):
     """ The Lithper class is the interpreter driver.  It does the following:
             1. Initialize the global environment
@@ -45,18 +43,18 @@ class Lithp(Lisp):
 
     def init(self):
         # Define core functions
-        self.environment.set( "eq", Function(self.eq))
-        self.environment.set( "quote", Function(self.quote))
-        self.environment.set( "car", Function(self.car))
-        self.environment.set( "cdr", Function(self.cdr))
-        self.environment.set( "cons", Function(self.cons))
-        self.environment.set( "atom", Function(self.atom))
-        self.environment.set( "cond", Function(self.cond))
-        self.environment.set( "print", Function( self.println))
+        self.environment.set("eq", Function(self.eq))
+        self.environment.set("quote", Function(self.quote))
+        self.environment.set("car", Function(self.car))
+        self.environment.set("cdr", Function(self.cdr))
+        self.environment.set("cons", Function(self.cons))
+        self.environment.set("atom", Function(self.atom))
+        self.environment.set("cond", Function(self.cond))
+        self.environment.set("print", Function( self.println))
 
         # Special forms
-        self.environment.set( "lambda", Function(self.lambda_))
-        self.environment.set( "label", Function(self.label))
+        self.environment.set("lambda", Function(self.lambda_))
+        self.environment.set("label", Function(self.label))
 
         # Define core symbols
         self.environment.set("t", TRUE)
@@ -195,7 +193,7 @@ if __name__ == '__main__':
         # print help information and exit:
         print(str( err)) # will print something like "option -a not recognized"
         lithp.usage()
-        sys.exit(INVALID_OPS)
+        sys.exit(1)
 
     for opt,arg in opts:
         if opt in ("--help", "-h"):
