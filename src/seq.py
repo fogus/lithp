@@ -5,7 +5,7 @@ class Seq(Eval):
         self.data = None
 
     def car(self):
-        pass
+        return self.data[0]
 
     def cdr(self):
         pass
@@ -49,9 +49,6 @@ class List(Seq):
         else:
             self.data = l
 
-    def car(self):
-        return self.data[0]
-
     def cdr(self):
         try:
             return List(self.data[1:])
@@ -59,7 +56,7 @@ class List(Seq):
             return List([])
 
     def cons(self, e):
-        ret = List(self.data[:]) # bugfix 1
+        ret = List(self.data[:]) # bugfix 1234977437
         ret.data.insert(0, e)
         return ret
 
