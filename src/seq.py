@@ -11,7 +11,7 @@ class Seq(Eval, Egal):
     def cdr(self):
         raise UnimplementedFunctionError("Function not yet implemented for ", self.__class__.__name__)
 
-    def cons(self):
+    def cons(self, e):
         raise UnimplementedFunctionError("Function not yet implemented for ", self.__class__.__name__)
 
     # The following four functions needed for iterability
