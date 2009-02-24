@@ -15,16 +15,16 @@ class Seq(Eval):
 
     # The following four functions needed for iterability
     def __iter__(self):
-        pass
+        return self.data.__iter__()
 
     def __len__(self):
-        pass
+        return len(self.data)
 
     def __contains__(self, e):
-        pass
+        return e in self.data
 
     def __getitem__(self, e):
-        pass
+        return self.data[e]
 
     def __eq__(self, rhs):
         if not isinstance(rhs, Seq):
@@ -64,18 +64,6 @@ class List(Seq):
         form = self.car().eval(env)
 
         return form.eval(env, self.cdr())
-
-    def __iter__(self):
-        return self.data.__iter__()
-
-    def __len__(self):
-        return len(self.data)
-
-    def __contains__(self, e):
-        return e in self.data
-
-    def __getitem__(self, e):
-        return self.data[e]
 
     def __repr__(self):
         if self.data == []:
