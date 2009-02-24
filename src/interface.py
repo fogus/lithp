@@ -6,5 +6,5 @@ class Eval:
 
 class Egal:
     def __eq__(self, rhs):
-        raise UnimplementedFunctionError(rhs, "Function not yet implemented")
+        raise UnimplementedFunctionError("Function not yet implemented", rhs)
 

@@ -3,12 +3,12 @@ class Error(Exception):
     pass
 
 class UnimplementedFunctionError(Error):
-    def __init__(self, args, message):
-        self.args = args
+    def __init__(self, message, thing):
+        self.thing = thing
         self.message = message
 
     def __str__(self):
-        return self.message + ", " + repr(self.args)
+        return self.message + repr(self.thing)
 
 class EvaluationError(Error):
     def __init__(self, env, args, message):
