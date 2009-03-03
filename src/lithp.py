@@ -55,7 +55,7 @@ class Lithp(Lisp):
 
         # Special forms
         self.environment.set("lambda", Function(self.lambda_))
-        self.environment.set("label", Function(self.label))
+        self.environment.set("def", Function(self.label))
 
         # Define core symbols
         self.environment.set("t", TRUE)
