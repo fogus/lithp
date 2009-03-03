@@ -1,40 +1,40 @@
-(label null (lambda (x)
+(def null (lambda (x)
               (eq x (quote ()))))
 
-(label and (lambda (x y)
+(def and (lambda (x y)
              (cond (x
                     (cond (y (quote t))
                           (t (quote ()))))
                    (t (quote ())))))
 
-(label not (lambda (x)
+(def not (lambda (x)
              (cond (x (quote ()))
                    (t (quote t)))))
 
-(label append (lambda (x y)
+(def append (lambda (x y)
                 (cond ((null x) y)
                       (t (cons (car x) (append (cdr x) y))))))
 
-(label list (lambda (x y)
+(def list (lambda (x y)
               (cons x (cons y (quote ())))))
 
-(label pair (lambda (x y)
+(def pair (lambda (x y)
               (cond ((and (null x) (null y)) (quote ()))
                     ((and (not (atom x)) (not (atom y)))
                      (cons (list (car x) (car y))
                            (pair (cdr x) (cdr y)))))))
 
-(label assoc (lambda (x y)
+(def assoc (lambda (x y)
                (cond ((eq (car (car y)) x) (car (cdr (car y))))
                      (t (assoc x (cdr y))))))
 
-(label caar (lambda (x) (car (car x))))
-(label cadr (lambda (x) (car (cdr x))))
-(label caddr (lambda (x) (car (cdr (cdr x)))))
-(label cadar (lambda (x) (car (cdr (car x)))))
-(label caddar (lambda (x) (car (cdr (cdr (car x))))))
+(def caar (lambda (x) (car (car x))))
+(def cadr (lambda (x) (car (cdr x))))
+(def caddr (lambda (x) (car (cdr (cdr x)))))
+(def cadar (lambda (x) (car (cdr (car x)))))
+(def caddar (lambda (x) (car (cdr (cdr (car x))))))
 
-(label eval (lambda (e a)
+(def eval (lambda (e a)
   (cond
     ((atom e) (assoc e a))
     ((atom (car e))
@@ -51,7 +51,7 @@
        (t (eval (cons (assoc (car e) a)
                         (cdr e))
                   a))))
-    ((eq (caar e) (quote label))
+    ((eq (caar e) (quote def))
      (eval (cons (caddar e) (cdr e))
             (cons (list (cadar e) (car e)) a)))
     ((eq (caar e) (quote lambda))
@@ -59,12 +59,12 @@
             (append. (pair (cadar e) (evlis (cdr e) a))
                      a))))))
 
-(label evcon (lambda (c a)
+(def evcon (lambda (c a)
   (cond ((eval (caar c) a)
          (eval (cadar c) a))
         (t (evcon (cdr c) a)))))
 
-(label evlis (lambda (m a)
+(def evlis (lambda (m a)
   (cond ((null m) (quote ()))
         (t (cons (eval  (car m) a)
                  (evlis (cdr m) a))))))
