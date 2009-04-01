@@ -15,10 +15,14 @@
                (t (f (car lst)
                      (reduce f (cdr lst)))))))
 
+(def append (lambda (x y)
+                (cond ((null x) y)
+                      (t (cons (car x) (append (cdr x) y))))))
+
 (def filter (lambda (f lst)
               (cond
                ((null lst) lst)
                (t (cond
-                   ((f (car lst)) (cons (car lst) (filter f (cdr lst))))
+                   ((f (car lst)) (append (car lst) (filter f (cdr lst))))
                    (t (filter f (cdr lst))))))))
 
