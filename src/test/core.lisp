@@ -26,3 +26,13 @@
                    ((f (car lst)) (append (car lst) (filter f (cdr lst))))
                    (t (filter f (cdr lst))))))))
 
+(def and (lambda (x y)
+             (cond (x
+                    (cond (y (quote t))
+                          (t (quote ()))))
+                   (t (quote ())))))
+
+(def not (lambda (x)
+             (cond (x (quote ()))
+                   (t (quote t)))))
+
