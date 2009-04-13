@@ -1,3 +1,29 @@
+(def and (lambda (x y)
+             (cond (x
+                    (cond (y (quote t))
+                          (t (quote ()))))
+                   (t (quote ())))))
+
+(def not (lambda (x)
+             (cond (x (quote ()))
+                   (t (quote t)))))
+
+(def nand (lambda (x y)
+            (not (and x y))))
+
+(def or (lambda (x y)
+          (nand
+           (nand x x) 
+           (nand y y))))
+
+(def nor (lambda (x y)
+           (not (or x y))))
+
+(def xor (lambda (x y)
+           (or
+            (and (not x) y)
+            (and x (not y)))))
+
 (def mapcar (lambda (f lst)
               (cond
                ((null lst) (quote ())
@@ -26,13 +52,4 @@
                    ((f (car lst)) (append (car lst) (filter f (cdr lst))))
                    (t (filter f (cdr lst))))))))
 
-(def and (lambda (x y)
-             (cond (x
-                    (cond (y (quote t))
-                          (t (quote ()))))
-                   (t (quote ())))))
-
-(def not (lambda (x)
-             (cond (x (quote ()))
-                   (t (quote t)))))
 
