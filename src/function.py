@@ -21,13 +21,15 @@ class Function(Eval):
 # (label x (pair (quote (a)) (quote (1))))
 # (label x (pair (quote (a)) (quote (1))))
 class Lambda(Eval):
-    def __init__(self, e, n, b):
-        self.env =   e
+    def __init__(self, n, b):
         self.names = n
         self.body =  b
 
-    def __repr__( self):
+    def __repr__(self):
         return "<lambda %s>" % id(self)
+
+    def store_bindings(self, containing_env):
+        containing_env.push()
 
     def eval(self, env, args):
         values = [a for a in args]
@@ -37,10 +39,7 @@ class Lambda(Eval):
 
         LITHP = env.get("__lithp__")
 
-        if self.env:
-            LITHP.push(self.env.binds)
-        else:
-            LITHP.push()
+        store_bindings(LITHP)
 
         for i in range(len(values)):
             LITHP.environment.binds[self.names[i].data] = values[i].eval(LITHP.environment)
@@ -51,5 +50,17 @@ class Lambda(Eval):
 
         LITHP.pop()
         return ret
+
+class Closure(Lambda):
+    def __init__(self, e, n, b):
+        super(Lambda, self).__init__(n, b)
+        self.env = e
+
+    def __repr__(self):
+        return "<lexical closure %s>" % id(self)
+
+    def store_bindings(self, containing_env):
+        containing_env.push(self.env.binds)
+
 
 import lithp
