@@ -6,6 +6,7 @@
 #   http://www.python.org/dev/peps/
 #   http://www.python.org/dev/peps/pep-0008/
 
+import pdb
 import getopt, sys, io
 from env import Environment
 from function import Function
@@ -14,6 +15,7 @@ from atom import FALSE
 from lisp import Lisp
 from reader import Reader
 from error import Error
+from function import Lambda
 
 NAME = "Lithp"
 VERSION = "v0.1.0"
@@ -63,6 +65,7 @@ class Lithp(Lisp):
 
         # Define meta-elements
         self.environment.set("__lithp__", self)
+        self.environment.set("__global__", self.environment)
 
     def usage(self):
         self.print_banner()
@@ -114,16 +117,23 @@ class Lithp(Lisp):
             result = None
 
             try:
-                result = self.eval( sexpr)
+                #pdb.set_trace()
+                result = self.eval(sexpr)
             except Error as err:
                 print(err)
 
             if self.verbose:
-                self.stdout.write( "    %s\n" % result)
+                self.stdout.write("    %s\n" % result)
 
             sexpr = self.rdr.get_sexpr()
 
-    def eval( self, sexpr):
+    def lambda_(self, env, args):
+        if self.environment == env.get("__global__"):
+            return Lambda(None, args[0], args[1:])
+        else:
+            return Lambda(env, args[0], args[1:])
+
+    def eval(self, sexpr):
         try:
             return sexpr.eval(self.environment)
         except ValueError as err:
