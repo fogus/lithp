@@ -1,7 +1,6 @@
 from interface import Eval
 from atom import FALSE
 
-
 class Function(Eval):
     def __init__(self, fn):
         self.fn = fn
