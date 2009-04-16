@@ -53,7 +53,7 @@ class Lambda(Eval):
 
 class Closure(Lambda):
     def __init__(self, e, n, b):
-        super(Lambda, self).__init__(n, b)
+        Lambda.__init__(self, n, b)
         self.env = e
 
     def __repr__(self):
