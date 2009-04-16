@@ -39,7 +39,7 @@ class Lambda(Eval):
 
         LITHP = env.get("__lithp__")
 
-        store_bindings(LITHP)
+        self.store_bindings(LITHP)
 
         for i in range(len(values)):
             LITHP.environment.binds[self.names[i].data] = values[i].eval(LITHP.environment)
