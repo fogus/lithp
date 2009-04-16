@@ -16,6 +16,7 @@ from lisp import Lisp
 from reader import Reader
 from error import Error
 from function import Lambda
+from function import Closure
 
 NAME = "Lithp"
 VERSION = "v0.1.0"
@@ -129,9 +130,9 @@ class Lithp(Lisp):
 
     def lambda_(self, env, args):
         if self.environment == env.get("__global__"):
-            return Lambda(None, args[0], args[1:])
+            return Lambda(args[0], args[1:])
         else:
-            return Lambda(env, args[0], args[1:])
+            return Closure(env, args[0], args[1:])
 
     def eval(self, sexpr):
         try:
