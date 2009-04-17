@@ -51,11 +51,13 @@
               (cond ((null append_x) append_y)
                     (t (cons (car append_x) (append (cdr append_x) append_y))))))
 
-(def filter (lambda (f lst)
+(def filter (lambda (filter_f filter_lst)
               (cond
-               ((null lst) lst)
+               ((null filter_lst) filter_lst)
                (t (cond
-                   ((f (car lst)) (append (car lst) (filter f (cdr lst))))
-                   (t (filter f (cdr lst))))))))
+                   ((filter_f (car filter_lst)) (append 
+                                                 (car filter_lst) 
+                                                 (filter filter_f (cdr filter_lst))))
+                   (t (filter filter_f (cdr filter_lst))))))))
 
 
