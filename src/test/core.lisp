@@ -32,7 +32,7 @@
 
 (def mapcar (lambda (mapcar_f mapcar_lst)
               (cond
-               ((null mapcar_lst) nil)
+               ((null mapcar_lst) mapcar_lst)
                 (t (cons
                     (mapcar_f (car mapcar_lst))
                     (mapcar mapcar_f (cdr mapcar_lst))))))))
@@ -47,9 +47,9 @@
                (t (reduce_f (car reduce_lst)
                             (reduce reduce_f (cdr reduce_lst)))))))
 
-(def append (lambda (x y)
-                (cond ((null x) y)
-                      (t (cons (car x) (append (cdr x) y))))))
+(def append (lambda (append_x append_y)
+              (cond ((null append_x) append_y)
+                    (t (cons (car append_x) (append (cdr append_x) append_y))))))
 
 (def filter (lambda (f lst)
               (cond
