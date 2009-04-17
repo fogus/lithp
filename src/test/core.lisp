@@ -30,16 +30,16 @@
 (def or_ (lambda (x y) (nand_ (nand_ x x) (nand_ y y))))
 (def xor_ (lambda (x y) (or_ (and_ x (not_ y)) (and_ (not_ x) y))))
 
-(def mapcar (lambda (f lst)
+(def mapcar (lambda (mapcar_f mapcar_lst)
               (cond
-               ((null lst) (quote ())
+               ((null mapcar_lst) nil)
                 (t (cons
-                    (f (car lst))
-                    (mapcar f (cdr lst))))))))
+                    (mapcar_f (car mapcar_lst))
+                    (mapcar mapcar_f (cdr mapcar_lst))))))))
 
 
-(def null (lambda (x)
-              (eq x (quote ()))))
+(def null (lambda (null_x)
+              (eq null_x nil)))
 
 (def reduce (lambda (f lst)
               (cond
