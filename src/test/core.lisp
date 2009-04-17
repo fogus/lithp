@@ -41,11 +41,11 @@
 (def null (lambda (null_x)
               (eq null_x nil)))
 
-(def reduce (lambda (f lst)
+(def reduce (lambda (reduce_f reduce_lst)
               (cond
-               ((null lst) (f))
-               (t (f (car lst)
-                     (reduce f (cdr lst)))))))
+               ((null reduce_lst) (reduce_f))
+               (t (reduce_f (car reduce_lst)
+                            (reduce reduce_f (cdr reduce_lst)))))))
 
 (def append (lambda (x y)
                 (cond ((null x) y)
