@@ -221,6 +221,9 @@ if __name__ == '__main__':
         else:
             print("unknown option " + opt)
 
+    # process the core lisp functions
+    lithp.process_files(["core.lisp"])
+
     if len(files) > 0:
         lithp.process_files(files)
 
