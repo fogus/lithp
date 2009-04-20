@@ -21,7 +21,8 @@
              ((eq (caar e) (quote lambda))
               (eval (caddar e)
                     (append (pair (cadar e) (evlis (cdr e) a))
-                            a))))))
+                            a)))
+             (t (assoc e a)))))
 
 (def evcon (lambda (evcon_c evcon_a)
              (cond ((eval (caar evcon_c) evcon_a)
