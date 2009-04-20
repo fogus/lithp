@@ -30,15 +30,34 @@
 (def or_ (lambda (x y) (nand_ (nand_ x x) (nand_ y y))))
 (def xor_ (lambda (x y) (or_ (and_ x (not_ y)) (and_ (not_ x) y))))
 
+(def list (lambda (x y)
+            (cons x (cons y (quote ())))))
+
+(def pair (lambda (x y)
+            (cond ((and (null x) (null y)) (quote ()))
+                  ((and (not (atom x)) (not (atom y)))
+                   (cons (list (car x) (car y))
+                         (pair (cdr x) (cdr y)))))))
+
+(def assoc (lambda (x y)
+             (cond ((eq (car (car y)) x) (car (cdr (car y))))
+                   (t (assoc x (cdr y))))))
+
+(def caar (lambda (x) (car (car x))))
+(def cadr (lambda (x) (car (cdr x))))
+(def caddr (lambda (x) (car (cdr (cdr x)))))
+(def cadar (lambda (x) (car (cdr (car x)))))
+(def caddar (lambda (x) (car (cdr (cdr (car x))))))
+
+(def null (lambda (null_x)
+            (eq null_x nil)))
+
 (def mapcar (lambda (mapcar_f mapcar_lst)
               (cond
                ((null mapcar_lst) mapcar_lst)
                (t (cons
                    (mapcar_f (car mapcar_lst))
-                   (mapcar mapcar_f (cdr mapcar_lst))))))))
-
-(def null (lambda (null_x)
-            (eq null_x nil)))
+                   (mapcar mapcar_f (cdr mapcar_lst)))))))
 
 (def reduce (lambda (reduce_f reduce_lst)
               (cond
@@ -59,25 +78,6 @@
                                                  (car filter_lst) 
                                                  (filter filter_f (cdr filter_lst))))
                    (t (filter filter_f (cdr filter_lst))))))))
-
-(def list (lambda (x y)
-            (cons x (cons y (quote ())))))
-
-(def pair (lambda (x y)
-            (cond ((and (null x) (null y)) (quote ()))
-                  ((and (not (atom x)) (not (atom y)))
-                   (cons (list (car x) (car y))
-                         (pair (cdr x) (cdr y)))))))
-
-(def assoc (lambda (x y)
-             (cond ((eq (car (car y)) x) (car (cdr (car y))))
-                   (t (assoc x (cdr y))))))
-
-(def caar (lambda (x) (car (car x))))
-(def cadr (lambda (x) (car (cdr x))))
-(def caddr (lambda (x) (car (cdr (cdr x)))))
-(def cadar (lambda (x) (car (cdr (car x)))))
-(def caddar (lambda (x) (car (cdr (cdr (car x))))))
 
 (def eval (lambda (e a)
             (cond
