@@ -40,6 +40,7 @@ class Lithp(Lisp):
         self.debug = False
         self.verbose = True
         self.core = True
+        self.closures = True
 
         self.rdr = Reader()
         self.environment = Environment()
@@ -130,10 +131,10 @@ class Lithp(Lisp):
             sexpr = self.rdr.get_sexpr()
 
     def lambda_(self, env, args):
-        if self.environment == env.get("__global__"):
-            return Lambda(args[0], args[1:])
-        else:
+        if self.environment != env.get("__global__") and self.closures:
             return Closure(env, args[0], args[1:])
+        else:
+            return Lambda(args[0], args[1:])
 
     def eval(self, sexpr):
         try:
@@ -206,7 +207,7 @@ if __name__ == '__main__':
     lithp = Lithp()
 
     try:
-        opts, files = getopt.getopt(sys.argv[1:], "hd", ["help", "debug", "no-core"])
+        opts, files = getopt.getopt(sys.argv[1:], "hd", ["help", "debug", "no-core", "no-closures"])
     except getopt.GetoptError as err:
         # print help information and exit:
         print(str( err)) # will print something like "option -a not recognized"
@@ -221,6 +222,8 @@ if __name__ == '__main__':
             lithp.verbose = True
         elif opt in ("--no-core"):
             lithp.core = False
+        elif opt in ("--no-closures"):
+            lithp.closures = False
         else:
             print("unknown option " + opt)
 
