@@ -39,6 +39,7 @@ class Lithp(Lisp):
 
         self.debug = False
         self.verbose = True
+        self.core = True
 
         self.rdr = Reader()
         self.environment = Environment()
@@ -205,7 +206,7 @@ if __name__ == '__main__':
     lithp = Lithp()
 
     try:
-        opts, files = getopt.getopt(sys.argv[1:], "hd", ["help", "debug"])
+        opts, files = getopt.getopt(sys.argv[1:], "hd", ["help", "debug", "no-core"])
     except getopt.GetoptError as err:
         # print help information and exit:
         print(str( err)) # will print something like "option -a not recognized"
@@ -218,11 +219,14 @@ if __name__ == '__main__':
             sys.exit(0)
         elif opt in ("--debug", "-d"):
             lithp.verbose = True
+        elif opt in ("--no-core"):
+            lithp.core = False
         else:
             print("unknown option " + opt)
 
-    # process the core lisp functions
-    lithp.process_files(["core.lisp"])
+    # process the core lisp functions, if applicable
+    if lithp.core:
+        lithp.process_files(["core.lisp"])
 
     if len(files) > 0:
         lithp.process_files(files)
