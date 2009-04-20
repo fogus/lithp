@@ -8,3 +8,23 @@ My last true exposure to Lisp was during my college years.  Since then I have ha
 [steele]: http://research.sun.com/people/mybio.php?uid=25706
 [jmc]: http://www-formal.stanford.edu/jmc
 [sussman]: http://swiss.csail.mit.edu/~gjs
+
+Features
+========
+The Lithp interpreter provides the absolute core functions of McCarthy's original as outlined in his classical paper.  That is, there are only seven functions and two special forms.
+
+Seven Functions
+---------------
+1.  `atom`
+2.  `car`
+3.  `cdr`
+4.  `cond`
+5.  `cons`
+6.  `eq`
+7.  `quote`
+
+Two Special Forms
+------------------
+1. `def`
+2. `lambda`
+
