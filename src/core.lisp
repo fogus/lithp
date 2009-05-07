@@ -79,4 +79,8 @@
                                                  (filter filter_f (cdr filter_lst))))
                    (t (filter filter_f (cdr filter_lst))))))))
 
-
+(def apply (lambda (apply_name apply_args)
+             (((append (quote (list))
+                      (list 
+                       (list (quote quote) apply_name)
+                       (list (quote quote) (list (quote quote) apply_args))))))))
