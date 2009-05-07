@@ -80,6 +80,7 @@
                    (t (filter filter_f (cdr filter_lst))))))))
 
 (def eval (lambda (e a)
+            (print e " " a)
             (cond
              ((atom e) (assoc e a))
              ((atom (car e))
@@ -116,7 +117,4 @@
                             (evlis (cdr evlis_m) evlis_a))))))
 
 (def apply (lambda (apply_name apply_args)
-             (((append (quote (list))
-                      (list 
-                       (list (quote quote) apply_name)
-                       (list (quote quote) (list (quote quote) apply_args))))))))
+             ((list apply_name (list (quote quote) apply_args)))))
