@@ -20,7 +20,7 @@ from function import Closure
 
 NAME = "Lithp"
 VERSION = "v0.1.0"
-WWW = "http://fogus.me"
+WWW = "http://fogus.me/_/lithp/"
 PROMPT = "lithp"
 DEPTH_MARK = "."
 
