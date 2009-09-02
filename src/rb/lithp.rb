@@ -7,6 +7,9 @@
 #   http://www.python.org/dev/peps/pep-0008/
 
 require 'reader'
+require 'env'
+require 'lisp'
+require 'fun'
 
 NAME = 'Lithp'
 VER = '0.0.1'
@@ -14,8 +17,12 @@ WWW = 'http://fogus.me/_/lithp/'
 PROMPT = 'lithp'
 DEPTH_MARK = '.'
 
-module Lithp
-  class Repl
+module Fogus
+  class Lithp
+    attr_reader :stdin, :stdout,   :stderr
+    attr_reader :core,  :closures
+    attr_reader :rdr,   :global
+
     def print_banner
       puts "The #{NAME} programming shell v#{VER}"
       puts "   by Fogus, #{WWW}"
@@ -26,16 +33,20 @@ module Lithp
       @stdin    = STDIN
       @stdout   = STDOUT
       @stderr   = STDERR
-      @core     = true
-      @closures = true
       @rdr      = Reader.new
       @global   = Env.new
+      @core = @closures = true
+
+      bootstrap
+    end
+
+    def bootstrap
+      @global.set('eq', Fun.new(@@eq))
     end
   end
 end
 
 
 
-repl = Lithp::Repl.new
+repl = Fogus::Lithp.new
 repl.print_banner
-
