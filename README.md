@@ -1,5 +1,7 @@
 Lithp is simply a(nother) Lisp interpreter written in the Python Programming Language.
 
+*note: currently only the Python port is fully operational*
+
 What The?!?
 ===========
 
