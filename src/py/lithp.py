@@ -121,7 +121,6 @@ class Lithp(Lisp):
             result = None
 
             try:
-                #pdb.set_trace()
                 result = self.eval(sexpr)
             except Error as err:
                 print(err)

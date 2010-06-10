@@ -13,7 +13,7 @@ require 'fun'
 
 NAME = 'Lithp'
 VER = '0.0.1'
-WWW = 'http://fogus.me/_/lithp/'
+WWW = 'http://github.com/fogus/lithp'
 PROMPT = 'lithp'
 DEPTH_MARK = '.'
 
@@ -27,15 +27,16 @@ module Fogus
       puts "The #{NAME} programming shell v#{VER}"
       puts "   by Fogus, #{WWW}"
       puts "   Type :help for more information"
+      puts ""
     end
 
     def initialize
-      @stdin    = STDIN
-      @stdout   = STDOUT
-      @stderr   = STDERR
-      @rdr      = Reader.new
-      @global   = Env.new
-      @core = @closures = true
+      @stdin           = STDIN
+      @stdout          = STDOUT
+      @stderr          = STDERR
+      @rdr             = Reader.new
+      @global          = Env.new
+      @core, @closures = true, false
 
       bootstrap
     end
@@ -43,10 +44,81 @@ module Fogus
     def bootstrap
       @global.set('eq', Fun.new(@@eq))
     end
+
+    def read_line(prompt)
+      @stdout.write(prompt)
+      line = @stdin.gets.strip
+
+      if line.empty?
+        :done
+      end
+
+      line
+    end
+
+    def get_complete_expr(line='',depth=0)
+      line += ' ' unless line.empty?
+
+      if @global.level != 0
+        prompt = "#{PROMPT} #{@global.level}#{DEPTH_MARK * (depth + 1)}"
+      else
+        if depth == 0
+          prompt = "#{PROMPT}> "
+        else
+          prompt = "#{PROMPT}#{DEPTH_MARK * (depth + 1)}"
+        end
+
+        line += read_line(prompt)
+      end
+
+      balance = 0;
+      line.each_char {|c|
+        if c.eql?('(')
+          balance += 1
+        elsif c.eql?(')')
+          balance -= 1
+        end
+      }
+
+      if balance > 0
+        get_complete_expr(line, depth+1)
+      elsif balance < 0
+        raise "Unmatched parenthesis #{balance}"
+      end
+
+      line
+    end
+
+    def process(expr)
+      puts 'this is where i will get the sexpr from the rdr'
+      puts "for the expr #{expr}"
+    end
+
+    def go
+      while true
+        expr = get_complete_expr
+
+        if expr.eql? ':quit'
+          puts 'bye now'
+          break
+        elsif expr.eql? ':help'
+          puts 'help is on its way'
+        elsif expr == :done
+          puts 'end of file encountered'
+          break
+        elsif expr.eql? ':env'
+          puts 'todo - print env'
+        else
+          process(expr)
+        end
+
+        puts expr
+      end
+    end
   end
 end
 
-
-
 repl = Fogus::Lithp.new
 repl.print_banner
+repl.go
+
