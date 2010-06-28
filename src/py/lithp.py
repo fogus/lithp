@@ -19,8 +19,8 @@ from function import Lambda
 from function import Closure
 
 NAME = "Lithp"
-VERSION = "v0.1.0"
-WWW = "http://fogus.me/_/lithp/"
+VERSION = "v1.0"
+WWW = "http://fogus.me/fun/lithp/"
 PROMPT = "lithp"
 DEPTH_MARK = "."
 

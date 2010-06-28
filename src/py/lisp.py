@@ -9,17 +9,17 @@ class Lisp:
 
     """
     The original Lisp described by McCarthy in his 1960 paper describes the following function set:
-    1.  `atom`    (/) done
-    2.  `car`     (/) done
-    3.  `cdr`     (/) done
-    4.  `cond`    (/) done
-    5.  `cons`    (/) done
-    6.  `eq`      (/) done
-    7.  `quote`   (/) done
+    1.  `atom`
+    2.  `car`
+    3.  `cdr`
+    4.  `cond`
+    5.  `cons`
+    6.  `eq`
+    7.  `quote`
 
     Plus two special forms:
-    1.  `lambda`  (/) done
-    2.  `def`     (/) done
+    1.  `lambda`
+    2.  `def`     (named `label` in the original)
 
     http://www-formal.stanford.edu/jmc/recursive.html
     """
