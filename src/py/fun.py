@@ -11,15 +11,6 @@ class Function(Eval):
     def eval(self, env, args):
         return self.fn(env, args)
 
-# ((lambda (x) x) 42)
-# ((lambda (x y) (eq x y)) 42 138)
-# ((lambda (f x y) (f x y)) (lambda (a b) (eq a b)) 1 2)
-# ((lambda (f x y) (f x y)) eq 1 2)
-#
-# TODO:
-# There is still a major issue with bindings.  Run consecutively:
-# (label x (pair (quote (a)) (quote (1))))
-# (label x (pair (quote (a)) (quote (1))))
 class Lambda(Eval):
     def __init__(self, n, b):
         self.names = n
