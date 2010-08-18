@@ -27,6 +27,6 @@ Seven Functions
 
 Two Special Forms
 ------------------
-1. `def`
+1. `label`
 2. `lambda`
 
