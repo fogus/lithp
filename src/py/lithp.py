@@ -1,10 +1,4 @@
-# The Lithp interpreter requires Python 3000 to function.
-# For more information:
-#   http://www.slideshare.net/jza/python-3000
-#   http://www.ibm.com/developerworks/linux/library/l-python3-1/
-#   http://www.python.org/dev/peps/pep-3000/
-#   http://www.python.org/dev/peps/
-#   http://www.python.org/dev/peps/pep-0008/
+# The Lithp interpreter requires Python 2.6.1+ to function.
 
 import pdb
 import getopt, sys, io

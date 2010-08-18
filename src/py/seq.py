@@ -43,7 +43,7 @@ class Seq(Eval, Egal):
 
 class List(Seq):
     def __init__(self, l=None):
-        super(List, self).__init__()
+        Seq.__init__(self)
 
         if l is None:
             self.data = []

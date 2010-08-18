@@ -1,8 +1,7 @@
 import string
 import re
 
-from atom import Symbol
-from atom import String
+from atom import Symbol, String
 from number import Number, Integral, LongInt, Float
 from lisp import Lisp
 from seq import List

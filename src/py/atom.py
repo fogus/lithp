@@ -14,7 +14,7 @@ class Atom(Eval, Egal):
 
 class Symbol(Atom):
     def __init__(self, sym):
-        super(Symbol, self).__init__(sym)
+        Atom.__init__(self, sym)
 
     def __repr__(self):
         return self.data
@@ -25,7 +25,9 @@ class Symbol(Atom):
     def eval(self, env, args=None):
         return env.get(self.data)
 
-# String as Seqs added as bugfix #287967c031646c59399c881ef08d35968a6ab825
+TRUE = Symbol("t")
+FALSE = List()
+
 class String(Atom, Seq):
     def __init__(self, str):
         super(String, self).__init__(str)
@@ -47,6 +49,3 @@ class String(Atom, Seq):
 
     def cdr(self):
         return String(self.data[1:])
-
-TRUE = Symbol("t")
-FALSE = List()
