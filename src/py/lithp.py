@@ -3,14 +3,14 @@
 import pdb
 import getopt, sys, io
 from env import Environment
-from function import Function
+from fun import Function
 from atom import TRUE
 from atom import FALSE
 from lisp import Lisp
 from reader import Reader
 from error import Error
-from function import Lambda
-from function import Closure
+from fun import Lambda
+from fun import Closure
 
 NAME = "Lithp"
 VERSION = "v1.0"

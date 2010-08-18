@@ -2,7 +2,7 @@ from atom import TRUE
 from atom import FALSE
 from atom import Symbol
 from seq import Seq
-from function import Lambda
+from fun import Lambda
 
 class Lisp:
     SPECIAL = "()"
