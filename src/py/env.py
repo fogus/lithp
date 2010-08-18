@@ -20,8 +20,10 @@
 # to build a simple language up from scratch.  I suppose if I were a real manly guy then I would have found an IBM 704, but 
 # that would be totally insane. (email me if you have one that you'd like to sell for cheap)
 #
-# 
+# Anyway, the point of this is that I needed to start with creating an `Environment` that provided dynamic scoping, and the
+# result is this.
 class Environment:
+    # The binding are stored in a simple dict and the stack discipline is emulated through the `parent` link
     def __init__(self, par=None, bnd=None):
         if bnd:
             self.binds = bnd
@@ -35,6 +37,7 @@ class Environment:
         else:
             self.level = 0
 
+    # Getting a binding potentially requires the traversal of the parent link
     def get(self, key):
         if key in self.binds:
             return self.binds[key]
@@ -43,6 +46,7 @@ class Environment:
         else:
             raise ValueError("Invalid symbol " + key)
 
+    # Setting a binding is symmetric to getting
     def set(self, key, value):
         if key in self.binds:
             self.binds[key] = value
@@ -56,7 +60,32 @@ class Environment:
             return True
 
         return False
-
+    
+    # Push a new binding by creating a new Env
+    #
+    # Dynamic scope works like a stack.  Whenever a variable is created it's binding is pushed onto a
+    # global stack.  In this case, the stack is simulated through a chain of parent links.  So if you were to
+    # create the following:
+    #
+    #     (label a nil)
+    #     (label frobnicate (lambda () (cons a nil)))
+    #     
+    #     ((lambda (a)
+    #        (frobnicate))
+    #      (quote x))
+    #
+    # Then the stack would look like the figure below within the body of `frobnicate`:
+    #
+    #     |         |
+    #     |         |
+    #     | a = 'x  |
+    #     | ------- |
+    #     | a = nil |
+    #     +---------+
+    # 
+    # Meaning that when accessing `a`, `frobnicate`  will get the binding at the top of the stack, producing the result `(x)`.  This push/pop
+    # can become difficult, so people have to do all kinds of tricks to avoid confusion (i.e. pseudo-namespace via variable naming schemes).
+    #
     def push(self, bnd=None):
         return Environment(self, bnd)
 

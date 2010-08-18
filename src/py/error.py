@@ -1,4 +1,6 @@
-# Created for bugfix #1235485607
+# I one day plan to create a whole battery of errors so that the REPL provides a detailed report whenever
+# something goes wrong.  That day is not now.
+
 class Error(Exception):
     """Base class for exceptions in this module."""
     pass
