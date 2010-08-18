@@ -230,3 +230,9 @@ if __name__ == '__main__':
 
     lithp.print_banner()
     lithp.repl()
+
+
+#### References
+
+# (McCarthy 1979) *History of Lisp* by John MaCarthy
+# (McCarthy 1960) *Recursive functions of symbolic expressions and their computation by machine, part I* by John McCarthy

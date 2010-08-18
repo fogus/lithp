@@ -67,6 +67,9 @@ class Reader:
             self.next()
 
             return self.previous()
+        # As mentioned in [atom.py](atom.html), I started down the path of implementing linear Lisp.
+        # However, that work was never completed, but the reading of strings (surrounded by `"`) still remains
+        # This may change in the future.
         elif self.current() == '"':
             # Parse a string.
             str = ""
