@@ -234,6 +234,10 @@ if __name__ == '__main__':
 
 #### References
 
-# (McCarthy 1979) *History of Lisp* by John MaCarthy
-# (McCarthy 1960) *Recursive functions of symbolic expressions and their computation by machine, part I* by John McCarthy
-# (Church 1941) *The Calculi of Lambda-Conversion* by Alonzo Church
+# - (McCarthy 1979) *History of Lisp* by John MaCarthy
+# - (McCarthy 1960) *Recursive functions of symbolic expressions and their computation by machine, part I* by John McCarthy
+# - (Church 1941) *The Calculi of Lambda-Conversion* by Alonzo Church
+# - (Baker 1993) *Equal Rights for Functional Objects or, The More Things Change, The More They Are the Same* by Henry Baker
+# - (Kleene 1952) *Introduction of Meta-Mathematics* by Stephen Kleene
+# - (McCarthy 1962) *LISP 1.5 Programmer's Manual* by John McCarthy, Daniel Edwards, Timothy Hart, and Michael Levin
+# - (IBM 1955) *IBM 704 Manual of Operation* [here](http://www.cs.virginia.edu/brochure/images/manuals/IBM_704/IBM_704.html)

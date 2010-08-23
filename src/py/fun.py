@@ -17,7 +17,7 @@ class Function(Eval):
     def eval(self, env, args):
         return self.fn(env, args)
 
-# &lambda;
+# &lambda; &lambda; &lambda;
 
 # The real power of McCarthy's Lisp srpings from Alonzo Chruch's &lambda;-calculus.  
 class Lambda(Eval):
@@ -38,10 +38,10 @@ class Lambda(Eval):
     # The reason for these difficulties is a direct result of dynamic scoping.  McCarthy suggests that
     # a way to avoid these issues is to use point-free combinators to eliminate the need for variables
     # entirely.  This approach is a book unto itself -- which is likely the reason that McCarthy skips it.
-    def store_bindings(self, containing_env, values):
+    def push_bindings(self, containing_env, values):
         containing_env.push()
         
-        set_bindings(containing_env, values)
+        self.set_bindings(containing_env, values)
 
     # The bindings are set one by one corresponding to the input values.
     def set_bindings(self, containing_env, values):
@@ -61,7 +61,7 @@ class Lambda(Eval):
         LITHP = env.get("__lithp__")
         
         # ... so I do just that.
-        self.store_bindings(LITHP, values)
+        self.push_bindings(LITHP, values)
         
         # Now each form in the body is evaluated one by one, and the last determines the return value
         ret = FALSE
@@ -90,10 +90,10 @@ class Closure(Lambda):
     # It's hard to imagine that this is the only difference between dynamic and lexical scope.  That is, whereas the 
     # latter established bindings in the root context, the former does so only at the most immediate.  Of course, there
     # is no way to know this, so I had to make sure that the right context was passed within [lithp.py](lithp.html).
-    def store_bindings(self, containing_env, values):
+    def push_bindings(self, containing_env, values):
         containing_env.push(self.env.binds)
         
-        set_bindings(containing_env, values)
+        self.set_bindings(containing_env, values)
 
 
 import lithp
