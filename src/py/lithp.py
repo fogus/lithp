@@ -59,6 +59,8 @@ class Lithp(Lisp):
 
         # Define core symbols
         self.environment.set("t", TRUE)
+
+        # There is one empty list, and it's named `nil`
         self.environment.set("nil", FALSE)
 
         # Define meta-elements

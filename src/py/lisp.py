@@ -126,21 +126,21 @@ class Lisp:
     # efficiently create stacks by using the address of the stack's top in one half-word and the negative of the 
     # allocated size in the other (the "Contents of Decrement part of Register number"), like so:
     #
-    #      +----------+----------+
-    #      |   top    |   -size  |
-    #      +----------+----------+
-    #           |           |
-    #           |           |
-    #           |           |
-    #           |           |
-    #       |   |    |      |
-    #     4 |   |    |      |
-    #       |   V    |      |
-    #     3 | elem3  |      |
-    #       |        |      |      
-    #     2 | elem2  |      |
-    #       |        |      |
-    #     1 | elem1  |<-----+
+    #      +----------+----------+                                          
+    #      |   top    |   -size  |                                          
+    #      +----------+----------+                                          
+    #           |           |        size goes toward zero                  
+    #           |           |                  |                            
+    #           |           |                  |                            
+    #           |           |                  v                            
+    #       |   |    |      |                                               
+    #     4 |   |    |      |                                               
+    #       |   V    |      |                                               
+    #     3 | elem3  |      |                                               
+    #       |        |      |                  ^                            
+    #     2 | elem2  |      |                  |                                 
+    #       |        |      |                  |                                 
+    #     1 | elem1  |<-----+           stack grows up                          
     #       |        |
     #     0 | elem0  |
     #       +--------+
@@ -180,7 +180,38 @@ class Lisp:
     # Lisp list.  If you allow me, let me spend a few moments describing this elegant structure, and why it's such an important 
     # abstract data type (ADT).
     #
+    # Lisp from the beginning was built with the philosophy that lists should be a first-class citizen of the language; not only in 
+    # the realm of execution, but also generation and manipulation.   If you look at my implementation of `List` in [seq.py](seq.html)
+    # you'll notice that it's pretty standard fare.  That is, it, like most lisp implementations is backed by a boring sequential store
+    # where one element conceptually points to the next and blah blah blah.  **Boring**.  Where the cons-cell shines is that it is a 
+    # very general purpose ADT that can be used in a number of ways, but primary among them is the ability to represent the list.
+    #
+    # Lists in the early Lisp was precisely a chain of cons cells and the operators `car` and `cdr` pointed to very
+    # specific implementation details that over time became generalized to mean "the first thing" and "the rest of the things"
+    # respectively.  But the fact remains that the cons cell solves a problem that is often difficult to do properly.  That is,
+    # how could Lisp represent a container that solved a number of requirements:
+    #
+    # * Represents a list
+    # * Represents a pair
+    # * Could be efficiently implemented
+    # * Heterogeneous
+    #
+    # It would be interesting to learn the precise genesis of the idea behind the cons cell, but I imagine that it must have provoked
+    # a eureka moment.  
+    #
+    # I've already discussed how the IBM 704 hardware was especially ammenable to solving this problem efficiently, but the other points
+    # bear further consideration.  Lisp popularly stands for "LISt Processing language" but as I explained, the basic unit of data was
+    # instead the cons cell structure.  The fact of the matter is that the cons cell serves as both the implementation detail for lists
+    # **and** the abstraction of a pair, all named oddly as if the implementation mattered.  If Lisp had originally gone whole hog into the
+    # abstraction game, then `car` and `cdr` would have been `first` and `rest` and would have spared the world decades of whining.
     # 
+    # Modern Lisps like Common Lisp rarely implement lists as chains of cons cells.  Instead, it's preferred to create proper lists
+    # with the `list` or `list*` functions and access them via `first` or `rest` (`cons` still persists thanks to its more general
+    # meaning of "construct") and to only use `car` and `cdr` when dealing with cons cells.  You can probably tell a lot about the
+    # level of knowledge for a Lisp programmer by the way that they construct and access lists.  For example, a programmer like
+    # myself whose exposure to Common Lisp has been entirely academic, you will probably see a propensity toward the use of `car` and
+    # `cdr`.  n00bzville
+    #
     def cdr(self, env, args):
         if(len(args) > 1):
             raise ValueError("Wrong number of arguments, expected {0}, got {1}".format(1, len(args)))
