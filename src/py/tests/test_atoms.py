@@ -3,6 +3,7 @@ from atom import TRUE, FALSE
 from atom import Atom
 from atom import Symbol
 from seq import List
+from env import Environment
 
 class AtomTests(TestCase):
     def test_truthiness(self):
@@ -27,8 +28,10 @@ class AtomTests(TestCase):
         foo = Symbol("foo")
         another_foo = Symbol("foo")
         bar = Symbol("bar")
+        e = Environment(None, {"foo":foo})
         
         self.assertTrue(foo != bar)
         self.assertTrue(foo == another_foo)
         self.assertTrue(another_foo == foo)
         self.assertTrue(foo.__hash__() == another_foo.__hash__())
+        self.assertTrue(foo.eval(e) == foo)
