@@ -10,7 +10,6 @@ DELIM = string.whitespace + Lisp.SPECIAL
 
 class Reader:
     def __init__(self, str=None):
-       print("Initializing the reader...")
        self.raw_source = str
        self.index = 0
        self.length = 0

@@ -16,18 +16,20 @@ from fun import Lambda
 #
 # Plus two special forms:
 #
-#    1.  `lambda`
+#    1.  `lambda` *(defined in [lithp.py](index.html))*
 #    2.  `label`
 #
 # <http://www-formal.stanford.edu/jmc/recursive.html>
 #
 
 # The `Lisp` class defines the magnificent seven in terms of the runtime environment built
-# thus far (i.e. dynamic scope, lambda, etc.)
+# thus far (i.e. dynamic scope, lambda, etc.).
+#
 class Lisp:
     SPECIAL = "()"
     
-    # The magnificent seven are tainted by a pair of useful, but ugly functions
+    # The magnificent seven are tainted by a pair of useful, but ugly functions, `dummy` and `println`
+    # purely for practical matters.
     def dummy(self, env, args):
         print("I do nothing, but you gave me: ")
         self.println(env, args)
@@ -159,6 +161,13 @@ class Lisp:
     # The Lisp garbage collector used this structure to facilitate garbage collection by marking referenced chains of
     # cells as negative (sign bit), thus causing them to be ignored when performing memory reclamation.
     #
+    # The `car` function works as follows:
+    #
+    #     (car (quote (a b c)))
+    #     ;=> a
+    # 
+    # The car of an empty list is an error (TODO: check if this is the case in McCarthy's Lisp)
+    #
     def car(self, env, args):
         if(len(args) > 1):
             raise ValueError("Wrong number of arguments, expected {0}, got {1}".format(1, len(args)))
@@ -193,7 +202,7 @@ class Lisp:
     #
     # * Represents a list
     # * Represents a pair
-    # * Could be efficiently implemented
+    # * Implementation efficiency
     # * Heterogeneous
     #
     # It would be interesting to learn the precise genesis of the idea behind the cons cell, but I imagine that it must have provoked
@@ -210,7 +219,14 @@ class Lisp:
     # meaning of "construct") and to only use `car` and `cdr` when dealing with cons cells.  You can probably tell a lot about the
     # level of knowledge for a Lisp programmer by the way that they construct and access lists.  For example, a programmer like
     # myself whose exposure to Common Lisp has been entirely academic, you will probably see a propensity toward the use of `car` and
-    # `cdr`.  n00bzville
+    # `cdr` instead of leveraging the more expressive sequence abstractions.
+    #
+    # The `cdr` function works as follows:
+    #
+    #     (cdr (quote (a b c)))
+    #     ;=> (b c)
+    # 
+    # The cdr of an empty list is an empty list (TODO: check if this is the case in McCarthy's Lisp)
     #
     def cdr(self, env, args):
         if(len(args) > 1):
@@ -223,7 +239,31 @@ class Lisp:
 
         return cell.cdr()
 
-    # (cons (quote a) (cons (quote b) (cons (quote c) (quote ()))))
+    #### cons
+
+    # So if Common Lisp has a more general sequence abstraction, then why would we still want to keep the cons cell?  The reason is
+    # that the cons cell is more flexible than a sequence and allows for a more intuitive way to build things like trees, pairs, and
+    # to represent code structure.
+    # 
+    # This function simply delegates the matter of consing to the target object.
+    #
+    # The `cons` function works as follows:
+    #
+    #     (cons (quote a) nil)
+    #     ;=> (a)
+    #
+    #     (cons (quote a) (quote (b c)))
+    #     ;=> (a b c)
+    #
+    #     (cons (quote a) (quote b))
+    #     ;=> Error
+    # 
+    # I've agonized long and hard over wheter or not to implement McCarthy Lisp as the language described in *Recursive functions...*
+    # as the anecdotal version only partially described in the *LISP 1.5 Programmer's Manual* and in most cases the former was my
+    # choice.  The creation of "dotted pairs" (I believe) was not an aspect of the original description and therefore is not represented
+    # in Lithp.  Sadly, I think that in some cases these version are mixed because I originally went down the path of creating a version of 
+    # Litho compatible with linear Lisp and Lisp 1.5, so this is a product of some pollution in the varying ideas.
+    #
     def cons(self, env, args):
         if(len(args) > 2):
             raise ValueError("Wrong number of arguments, expected {0}, got {1}".format(2, len(args)))
@@ -233,6 +273,24 @@ class Lisp:
 
         return second.cons(first)
 
+    #### atom
+
+    # Checks if a function is an atom; returns truthy if so.  One thing to note is that the empty
+    # list `()` is considered an atom because it cannot be deconstructed further.
+    #
+    # The `atom` function works as follows:
+    #
+    #     (atom (quote a))
+    #     ;=> t
+    #     
+    #     (atom nil)
+    #     ;=> t
+    #     
+    #     (atom (quote (a b c)))
+    #     ;=> ()
+    #
+    # Recall that the empty list is falsity.
+    #
     def atom(self, env, args):
         if(len(args) > 1):
             raise ValueError("Wrong number of arguments, expected {0}, got {1}".format(1, len(args)))
@@ -246,10 +304,17 @@ class Lisp:
 
         return FALSE
 
-    # (def x (pair (quote (a)) (quote (1))))
+    #### label
+
+    # Defines a named binding in the dynamic environment.
     def label(self, env, args):
         if(len(args) != 2):
             raise ValueError("Wrong number of arguments, expected {0}, got {1}".format(2, len(args)))
-
+        
+        # Notice that the first argument to `label` (a symbol) is **not** evaluated.  This is the key difference between
+        # a Lisp function and a special form (and macro, but I will not talk about those here).  That is, in *all*
+        # cases the arguments to a function are evaluated from left to right before being passed into the function.
+        # Conversely, special forms have special semantics for evaluation that cannot be directly emulated or implemented 
+        # using functions.
         env.set(args[0].data, args[1].eval(env))
         return env.get(args[0].data)

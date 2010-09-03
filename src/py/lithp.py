@@ -1,3 +1,22 @@
+# Lithp - A interpreter for John McCarthy's original Lisp.
+#
+# The heavily documented code for [Lithp can be found on Github](http://github.com/fogus/lithp).
+#
+# It wasn't enough to write the Lisp interpreter -- I also wanted to share what I learned with *you*.  Reading
+# this source code provides a snapshot into the mind of John McCarthy, Steve Russell, Timothy P. Hart, and Mike Levin and
+# as an added bonus, myself.  The following source files are available for your reading:
+# 
+# - [atom.py](atom.html)
+# - [env.py](env.html)
+# - [error.py](error.html)
+# - [fun.py](fun.html)
+# - [interface.py](interface.html)
+# - [lisp.py](lisp.html)
+# - [lithp.py](index.html) *(this file)*
+# - [number.py](number.html)
+# - [reader.py](reader.html)
+# - [seq.py](seq.html)
+# 
 # The Lithp interpreter requires Python 2.6.1+ to function.
 
 import pdb
@@ -44,18 +63,20 @@ class Lithp(Lisp):
 
     def init(self):
         # Define core functions
-        self.environment.set("eq", Function(self.eq))
-        self.environment.set("quote", Function(self.quote))
-        self.environment.set("car", Function(self.car))
-        self.environment.set("cdr", Function(self.cdr))
-        self.environment.set("cons", Function(self.cons))
-        self.environment.set("atom", Function(self.atom))
-        self.environment.set("cond", Function(self.cond))
-        self.environment.set("print", Function( self.println))
+        self.environment.set("eq",     Function(self.eq))
+        self.environment.set("quote",  Function(self.quote))
+        self.environment.set("car",    Function(self.car))
+        self.environment.set("cdr",    Function(self.cdr))
+        self.environment.set("cons",   Function(self.cons))
+        self.environment.set("atom",   Function(self.atom))
+        self.environment.set("cond",   Function(self.cond))
+        
+        # Define utility function
+        self.environment.set("print",  Function( self.println))
 
         # Special forms
         self.environment.set("lambda", Function(self.lambda_))
-        self.environment.set("label", Function(self.label))
+        self.environment.set("label",  Function(self.label))
 
         # Define core symbols
         self.environment.set("t", TRUE)
@@ -64,25 +85,26 @@ class Lithp(Lisp):
         self.environment.set("nil", FALSE)
 
         # Define meta-elements
-        self.environment.set("__lithp__", self)
+        self.environment.set("__lithp__",  self)
         self.environment.set("__global__", self.environment)
 
     def usage(self):
         self.print_banner()
         print
-        print(NAME.lower(), " <options> [lithp files]\n")
+        print NAME.lower(), " <options> [lithp files]\n"
 
     def print_banner(self):
-        print("The ", NAME, " programming shell ", VERSION)
-        print("   by Fogus, ", WWW)
-        print("   Type :help for more information")
+        print "The", NAME, "programming shell", VERSION
+        print "   by Fogus,", WWW
+        print "   Type :help for more information"
+        print
 
     def print_help(self):
-        print("Help for Lithp v", VERSION)
-        print("  Type :help for more information")
-        print("  Type :env to see the bindings in the current environment")
-        print("  Type :load followed by one or more filenames to load source files")
-        print("  Type :quit to exit the interpreter")
+        print "Help for Lithp v", VERSION
+        print "  Type :help for more information"
+        print "  Type :env to see the bindings in the current environment"
+        print "  Type :load followed by one or more filenames to load source files"
+        print "  Type :quit to exit the interpreter"
 
     def push(self, env=None):
         if env:
@@ -95,7 +117,8 @@ class Lithp(Lisp):
 
     def repl(self):
         while True:
-            source = self.get_complete_command() # Stealing a line from CLIPS
+            # Stealing the s-expression parsing approach from [CLIPS](http://clipsrules.sourceforge.net/)
+            source = self.get_complete_command() 
 
             # Check for any REPL directives
             if source in [":quit"]:
