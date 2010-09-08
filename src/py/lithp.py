@@ -18,7 +18,8 @@
 # - [seq.py](seq.html)
 # 
 # The Lithp interpreter requires Python 2.6.1+ to function.
-
+#   please add comments, report errors, annecdotes, etc. to the [Lithp Github project page](http://github.com/fogus/lithp)
+# 
 import pdb
 import getopt, sys, io
 from env import Environment
@@ -133,6 +134,7 @@ class Lithp(Lisp):
             else:
                 self.process(source)
 
+    # Source is processed one s-expression at a time.
     def process(self, source):
         sexpr = self.rdr.get_sexpr(source)
 
@@ -149,12 +151,22 @@ class Lithp(Lisp):
 
             sexpr = self.rdr.get_sexpr()
 
+    # In the process of living my life I had always heard that closures and dynamic scope
+    # cannot co-exist.  As a thought-experiment I can visualize why this is the case.  That is,
+    # while a closure captures the contextual binding of a variable, lookups in dynamic scoping
+    # occur on the dynamic stack.  This means that you may be able to close over a variable as 
+    # long as it's unique, but the moment someone else defines a variable of the same name 
+    # and attempt to look up the closed variable will resolve to the top-most binding on the 
+    # dynamic stack.  This assumes the the lookup occurs before the variable of the same name
+    # is popped.  While this is conceptually easy to grasp, I still wanted to see what would
+    # happen in practice -- and it wasn't pretty.
     def lambda_(self, env, args):
         if self.environment != env.get("__global__") and self.closures:
             return Closure(env, args[0], args[1:])
         else:
             return Lambda(args[0], args[1:])
 
+    # Delegate evaluation to the form.
     def eval(self, sexpr):
         try:
             return sexpr.eval(self.environment)
@@ -162,6 +174,8 @@ class Lithp(Lisp):
             print(err)
             return FALSE
 
+    # A complete command is defined as a complete s-expression.  Simply put, this would be any
+    # atom or any list with a balanced set of parentheses.
     def get_complete_command(self, line="", depth=0):
         if line != "":
             line = line + " "
@@ -175,14 +189,18 @@ class Lithp(Lisp):
                 prompt = PROMPT + "%s " % (DEPTH_MARK * (depth+1))
 
             line = line + self.read_line(prompt)
-
-            balance = 0                    # Used to balance the parens
+            
+            # Used to balance the parens
+            balance = 0
             for ch in line:
                 if ch == "(":
-                    balance = balance + 1  # This is not perfect, but will do for now
+                    # This is not perfect, but will do for now
+                    balance = balance + 1
                 elif ch == ")":
-                    balance = balance - 1  # Too many right parens is a problem
-            if balance > 0:                # Balanced parens gives zero
+                    # Too many right parens is a problem
+                    balance = balance - 1
+            if balance > 0:
+                # Balanced parens gives zero
                 return self.get_complete_command( line, depth+1)
             elif balance < 0:
                 raise ValueError("Invalid paren pattern")
@@ -204,6 +222,7 @@ class Lithp(Lisp):
 
         return line
 
+    # Lithp also processes files using the reader plumbing.
     def process_files(self, files):
         self.verbose = False
 
@@ -228,7 +247,7 @@ if __name__ == '__main__':
     try:
         opts, files = getopt.getopt(sys.argv[1:], "hd", ["help", "debug", "no-core", "no-closures"])
     except getopt.GetoptError as err:
-        # print help information and exit:
+        # Print help information and exit:
         print(str( err)) # will print something like "option -a not recognized"
         lithp.usage()
         sys.exit(1)
@@ -246,7 +265,7 @@ if __name__ == '__main__':
         else:
             print("unknown option " + opt)
 
-    # process the core lisp functions, if applicable
+    # Process the core lisp functions, if applicable
     if lithp.core:
         lithp.process_files(["../core.lisp"])
 
