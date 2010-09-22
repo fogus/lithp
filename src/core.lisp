@@ -118,3 +118,7 @@
 (label apply (lambda (apply_name apply_args)
              ((list apply_name (list (quote quote) apply_args)))))
 
+
+(label zero (lambda (s z) z))
+(label one (lambda (s z) (s z)))
+(label plus (lambda (w z) (lambda (y x) (z y x))))
