@@ -285,3 +285,4 @@ if __name__ == '__main__':
 # - (Kleene 1952) *Introduction of Meta-Mathematics* by Stephen Kleene
 # - (McCarthy 1962) *LISP 1.5 Programmer's Manual* by John McCarthy, Daniel Edwards, Timothy Hart, and Michael Levin
 # - (IBM 1955) *IBM 704 Manual of Operation* [here](http://www.cs.virginia.edu/brochure/images/manuals/IBM_704/IBM_704.html)
+# - (Hart 1963) *AIM-57: MACRO Definitions for LISP* by Timothy P. Hart
