@@ -16,6 +16,7 @@
 # - [number.py](number.html)
 # - [reader.py](reader.html)
 # - [seq.py](seq.html)
+# - [core.lisp](core.html)
 # 
 # The Lithp interpreter requires Python 2.6.1+ to function.
 #   please add comments, report errors, annecdotes, etc. to the [Lithp Github project page](http://github.com/fogus/lithp)
@@ -33,7 +34,7 @@ from fun import Lambda
 from fun import Closure
 
 NAME = "Lithp"
-VERSION = "v1.0"
+VERSION = "v1.1"
 WWW = "http://fogus.me/fun/lithp/"
 PROMPT = "lithp"
 DEPTH_MARK = "."
