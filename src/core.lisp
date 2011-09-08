@@ -48,6 +48,7 @@
 (label caddr (lambda (x) (car (cdr (cdr x)))))
 (label cadar (lambda (x) (car (cdr (car x)))))
 (label caddar (lambda (x) (car (cdr (cdr (car x))))))
+(label cadddar (lambda (x) (car (cdr (cdr (cdr (car x)))))))
 
 (label null (lambda (null_x)
               (eq null_x nil)))
@@ -103,7 +104,14 @@
                  (eval (caddar expr)
                        (append (pair (cadar expr) (eval-args (cdr expr) binds))
                                binds)))
-                (t (assoc expr binds)))))
+                ((eq (caar expr) (quote macro))
+                 (cond
+                   ((eq (cadar expr) (quote lambda))
+                    (eval (eval (car (cdddar expr))
+                                (cons (list (car (caddar expr)) 
+                                             (cadr expr)) 
+                                      binds))
+                          binds)))))))
 
 (label eval-cond (lambda (eval-cond_c eval-cond_a)
                    (cond ((eval (caar eval-cond_c) eval-cond_a)
