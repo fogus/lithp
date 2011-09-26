@@ -94,7 +94,7 @@ class Environment:
 
     def __repr__( self):
         ret = "\nEnvironment %s:\n" % self.level
-        keys = self.binds.keys()
+        keys = [i for i in self.binds.keys() if not i[:2] == "__"]
 
         for key in keys:
             ret = ret + " %5s: %s\n" % (key, self.binds[key])
