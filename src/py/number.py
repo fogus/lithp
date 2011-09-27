@@ -23,17 +23,17 @@ class Integral(Number):
     REGEX = re.compile(r'^[+-]?\d+$')
 
     def __init__( self, v):
-        super(Integral, self).__init__(v)
+        Number.__init__(self, v)
 
 class LongInt(Number):
     REGEX = re.compile(r'^[+-]?\d+[lL]$')
 
     def __init__( self, v):
-        super(LongInt, self).__init__(v)
+        Number.__init__(self, v)
 
 class Float(Number):
     REGEX = re.compile(r'^[+-]?(\d+\.\d*$|\d*\.\d+$)')
 
     def __init__( self, v):
-        super(Float, self).__init__(v)
+        Number.__init__(self, v)
 

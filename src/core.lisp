@@ -75,7 +75,7 @@
                 (cond
                   ((null filter_lst) filter_lst)
                   (t (cond
-                       ((filter_f (car filter_lst)) (append 
+                       ((filter_f (car filter_lst)) (cons
                                                      (car filter_lst) 
                                                      (filter filter_f (cdr filter_lst))))
                        (t (filter filter_f (cdr filter_lst))))))))
