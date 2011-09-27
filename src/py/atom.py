@@ -4,16 +4,16 @@ from error import UnimplementedFunctionError
 
 #### Atoms
 
-# McCarthy's Lisp defined two fundamental types: lists and atoms.  The class `Atom` 
-# represents that latter type.  Originally an atom was defined as simply something 
+# McCarthy's Lisp defined two fundamental types: lists and atoms.  The class `Atom`
+# represents that latter type.  Originally an atom was defined as simply something
 # immutable and unique.
 #
 # There is currently a disparity in the implementation of Lithp in that atoms are created
 # and stored within the contextual environment and therefore their uniqueness cannot
 # be guaranteed.  This is an artifact of implementation and not a problem in emulating
 # McCarthy's Lisp.
-# 
-# One point of note is that in the original there were **no numbers**.  Instead, numbers 
+#
+# One point of note is that in the original there were **no numbers**.  Instead, numbers
 # had to be represented as lists of atoms, proving to be quite slow. (McCarthy 1979)  Numbers
 # were not implemented until after Lisp 1.5 (**TODO** what version?)
 class Atom(Eval, Egal):
@@ -28,7 +28,7 @@ class Atom(Eval, Egal):
 
 #### Symbols
 
-# The symbol was the basic atom in Lisp 1 and served as the basic unit of data.  In his early 
+# The symbol was the basic atom in Lisp 1 and served as the basic unit of data.  In his early
 # papers McCarthy freely mixes the terms atom and symbol.
 class Symbol(Atom):
     def __init__(self, sym):
@@ -55,10 +55,10 @@ FALSE = List()
 
 #### Strings
 
-# In McCarthy's original paper (McCarthy 1960) he uses the term *string* to mean symbols, but later on 
-# he mentions them in a different context reagrding their role in something called *linear Lisp*.  I started 
+# In McCarthy's original paper (McCarthy 1960) he uses the term *string* to mean symbols, but later on
+# he mentions them in a different context reagrding their role in something called *linear Lisp*.  I started
 # down the path of implementing linear Lisp also, but got sidetracked.  Perhaps I will find time to complete it
-# sometime in the future.  In the meantime strings are provided, but are not compliant with the Lisp 1 
+# sometime in the future.  In the meantime strings are provided, but are not compliant with the Lisp 1
 # formalization.
 #
 # The first point of note is that the `String` class implements the `Seq` abstraction.  This is needed by the
@@ -68,7 +68,7 @@ FALSE = List()
 # This class will likely change in the future.
 class String(Atom, Seq):
     def __init__(self, str):
-        super(String, self).__init__(str)
+        Atom.__init__(self, str)
 
     def __repr__(self):
         return repr(self.data)
