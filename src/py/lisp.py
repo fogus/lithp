@@ -1,3 +1,5 @@
+# RIP John McCarthy 1927.09.04 - 2011.10.23
+
 from atom import TRUE
 from atom import FALSE
 from atom import Symbol
