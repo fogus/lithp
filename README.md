@@ -32,3 +32,7 @@ Two Special Forms
 1. `label`
 2. `lambda`
 
+License
+=======
+
+This software is provided as-is under the [MIT license](http://opensource.org/licenses/MIT).
