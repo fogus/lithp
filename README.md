@@ -4,6 +4,9 @@ Lithp is a(nother) McCarthy Lisp interpreter (with macros too) written in the Py
 
 RIP John McCarthy 1927.09.04 - 2011.10.23
 
+RIP Timothy Hart 1939.09.18  - 2014.01.20
+
+
 What The?!?
 ===========
 
