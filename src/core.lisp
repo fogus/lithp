@@ -33,14 +33,14 @@
 (label or_ (lambda (x y) (nand_ (nand_ x x) (nand_ y y))))
 (label xor_ (lambda (x y) (or_ (and_ x (not_ y)) (and_ (not_ x) y))))
 
-(label list (lambda (x y)
-              (cons x (cons y (quote ())))))
-
 (label pair (lambda (x y)
+              (cons x (cons y nil))))
+
+(label zip (lambda (x y)
               (cond ((and (null x) (null y)) nil)
                     ((and (not (atom x)) (not (atom y)))
-                     (cons (list (car x) (car y))
-                           (pair (cdr x) (cdr y)))))))
+                     (cons (pair (car x) (car y))
+                           (zip (cdr x) (cdr y)))))))
 
 (label assoc (lambda (x y)
                (cond ((eq (car (car y)) x) (car (cdr (car y))))
@@ -102,16 +102,16 @@
                             binds))))
                 ((eq (caar expr) (quote label))
                  (eval (cons (caddar expr) (cdr expr))
-                       (cons (list (cadar expr) (car expr)) binds)))
+                       (cons (pair (cadar expr) (car expr)) binds)))
                 ((eq (caar expr) (quote lambda))
                  (eval (caddar expr)
-                       (append (pair (cadar expr) (eval-args (cdr expr) binds))
+                       (append (zip (cadar expr) (eval-args (cdr expr) binds))
                                binds)))
                 ((eq (caar expr) (quote macro))
                  (cond
                    ((eq (cadar expr) (quote lambda))
                     (eval (eval (car (cdddar expr))
-                                (cons (list (car (caddar expr)) 
+                                (cons (pair (car (caddar expr)) 
                                              (cadr expr)) 
                                       binds))
                           binds)))))))
@@ -127,7 +127,7 @@
                                   (eval-args (cdr eval-args_m) eval-args_a))))))
 
 (label apply (lambda (apply_name apply_args)
-               ((list apply_name (list (quote quote) apply_args)))))
+               ((pair apply_name (pair (quote quote) apply_args)))))
 
 
 (label zero (lambda (s z) z))
