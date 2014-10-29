@@ -42,9 +42,9 @@
                      (cons (pair (car x) (car y))
                            (zip (cdr x) (cdr y)))))))
 
-(label lookup (lambda (x y)
-               (cond ((eq (car (car y)) x) (car (cdr (car y))))
-                     (t (lookup x (cdr y))))))
+(label lookup (lambda (name context)
+                (cond ((eq (car (car context)) name) (car (cdr (car context))))
+                       (t (lookup name (cdr context))))))
 
 (label caar (lambda (x) (car (car x))))
 (label cadr (lambda (x) (car (cdr x))))
@@ -82,6 +82,9 @@
                                                      (car filter_lst) 
                                                      (filter filter_f (cdr filter_lst))))
                        (t (filter filter_f (cdr filter_lst))))))))
+
+(label QUOTE (lambda (qexpr)
+               (car (cdr qexpr))))
 
 (label eval (lambda (expr binds)
               (cond
