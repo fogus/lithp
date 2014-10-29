@@ -1,3 +1,6 @@
+(label t (quote t))
+(label nil (quote ()))
+
 (label and (lambda (and_x and_y)
              (cond (and_x
                     (cond (and_y t)

@@ -80,12 +80,6 @@ class Lithp(Lisp):
         self.environment.set("lambda", Function(self.lambda_))
         self.environment.set("label",  Function(self.label))
 
-        # Define core symbols
-        self.environment.set("t", TRUE)
-
-        # There is one empty list, and it's named `nil`
-        self.environment.set("nil", FALSE)
-
         # Define meta-elements
         self.environment.set("__lithp__",  self)
         self.environment.set("__global__", self.environment)
