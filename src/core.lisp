@@ -42,9 +42,9 @@
                      (cons (pair (car x) (car y))
                            (zip (cdr x) (cdr y)))))))
 
-(label assoc (lambda (x y)
+(label lookup (lambda (x y)
                (cond ((eq (car (car y)) x) (car (cdr (car y))))
-                     (t (assoc x (cdr y))))))
+                     (t (lookup x (cdr y))))))
 
 (label caar (lambda (x) (car (car x))))
 (label cadr (lambda (x) (car (cdr x))))
@@ -85,7 +85,7 @@
 
 (label eval (lambda (expr binds)
               (cond
-                ((atom expr) (assoc expr binds))
+                ((atom expr) (lookup expr binds))
                 ((atom (car expr))
                  (cond
                    ((eq (car expr) (quote quote)) (cadr expr))
@@ -97,7 +97,7 @@
                    ((eq (car expr) (quote cons))  (cons   (eval (cadr expr) binds)
                                                           (eval (caddr expr) binds)))
                    ((eq (car expr) (quote cond))  (eval-cond (cdr expr) binds))
-                   (t (eval (cons (assoc (car expr) binds)
+                   (t (eval (cons (lookup (car expr) binds)
                                   (cdr expr))
                             binds))))
                 ((eq (caar expr) (quote label))
