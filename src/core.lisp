@@ -83,8 +83,8 @@
                                                      (filter filter_f (cdr filter_lst))))
                        (t (filter filter_f (cdr filter_lst))))))))
 
-(label QUOTE (lambda (qexpr)
-               (car (cdr qexpr))))
+(label quote' (lambda (qexpr)
+                (car (cdr qexpr))))
 
 (label eval (lambda (expr binds)
               (cond
