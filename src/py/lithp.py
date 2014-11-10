@@ -117,17 +117,22 @@ class Lithp(Lisp):
             source = self.get_complete_command() 
 
             # Check for any REPL directives
-            if source in [":quit"]:
-                break
-            elif source in [":help"]:
-                self.print_help()
-            elif source.startswith(":load"):
-                files = source.split(" ")[1:]
-                self.process_files(files)
-            elif source in [":env"]:
-                print(self.environment)
-            else:
-                self.process(source)
+            try:
+                if source in [":quit"]:
+                    break
+                elif source in [":help"]:
+                    self.print_help()
+                elif source.startswith(":load"):
+                    files = source.split(" ")[1:]
+                    self.process_files(files)
+                elif source in [":env"]:
+                    print(self.environment)
+                else:
+                    self.process(source)
+            except AttributeError:
+                print "Could not process command: ", source
+                return
+                
 
     # Source is processed one s-expression at a time.
     def process(self, source):
@@ -196,13 +201,13 @@ class Lithp(Lisp):
                     balance = balance - 1
             if balance > 0:
                 # Balanced parens gives zero
-                return self.get_complete_command( line, depth+1)
+                return self.get_complete_command(line, depth+1)
             elif balance < 0:
                 raise ValueError("Invalid paren pattern")
             else:
                 return line
 
-    def read_line( self, prompt) :
+    def read_line(self, prompt) :
         if prompt and self.verbose:
             self.stdout.write("%s" % prompt)
             self.stdout.flush()

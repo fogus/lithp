@@ -102,6 +102,18 @@
 (label cdr' (lambda (cdexpr cdbinds)
 	      (cdr (eval (car (cdr cdexpr)) cdbinds))))
 
+(label cons' (lambda (coexpr cobinds)
+	       (cons   (eval (car (cdr coexpr)) cobinds)
+		       (eval (car (cdr (cdr coexpr))) cobinds))))
+
+(label eval-cond (lambda (condition condbinds)
+                   (cond ((eval (car (car condition)) condbinds)
+                          (eval (car (cdr (car condition))) condbinds))
+                         (t (eval-cond (cdr condition) condbinds)))))
+
+(label cond' (lambda (cndexpr cndbinds)
+	       (eval-cond (cdr cndexpr) cndbinds)))
+
 (label eval (lambda (expr binds)
               (cond
                 ((atom expr) (lookup expr binds))
@@ -112,9 +124,8 @@
                    ((eq (car expr) (quote eq))    (eq'    expr binds))
                    ((eq (car expr) (quote car))   (car'   expr binds))
                    ((eq (car expr) (quote cdr))   (cdr'   expr binds))
-                   ((eq (car expr) (quote cons))  (cons   (eval (cadr expr) binds)
-                                                          (eval (caddr expr) binds)))
-                   ((eq (car expr) (quote cond))  (eval-cond (cdr expr) binds))
+                   ((eq (car expr) (quote cons))  (cons'  expr binds))
+                   ((eq (car expr) (quote cond))  (cond'  expr binds))
                    (t (eval (cons (lookup (car expr) binds)
                                   (cdr expr))
                             binds))))
@@ -133,11 +144,6 @@
                                              (cadr expr)) 
                                       binds))
                           binds)))))))
-
-(label eval-cond (lambda (eval-cond_c eval-cond_a)
-                   (cond ((eval (caar eval-cond_c) eval-cond_a)
-                          (eval (cadar eval-cond_c) eval-cond_a))
-                         (t (eval-cond (cdr eval-cond_c) eval-cond_a)))))
 
 (label eval-args (lambda (eval-args_m eval-args_a)
                    (cond ((null eval-args_m) nil)
