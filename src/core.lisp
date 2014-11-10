@@ -92,9 +92,12 @@
 (label atom' (lambda (aexpr abinds)
 	       (atom (eval (car (cdr aexpr)) abinds))))
 
-(label (lambda (eexpr ebinds)
-         (eq (eval (car (cdr eexpr)) ebinds)
-	     (eval (car (cdr (cdr eexpr))) ebinds))))
+(label eq' (lambda (eexpr ebinds)
+	     (eq (eval (car (cdr eexpr)) ebinds)
+		 (eval (car (cdr (cdr eexpr))) ebinds))))
+
+(label car' (lambda (caexpr cabinds)
+	      (car (eval (car (cdr caexpr)) cabinds))))
 
 (label eval (lambda (expr binds)
               (cond
@@ -104,7 +107,7 @@
                    ((eq (car expr) (quote quote)) (quote' expr))
                    ((eq (car expr) (quote atom))  (atom'  expr binds))
                    ((eq (car expr) (quote eq))    (eq'    expr binds))
-                   ((eq (car expr) (quote car))   (car    (eval (cadr expr) binds)))
+                   ((eq (car expr) (quote car))   (car'   expr binds))
                    ((eq (car expr) (quote cdr))   (cdr    (eval (cadr expr) binds)))
                    ((eq (car expr) (quote cons))  (cons   (eval (cadr expr) binds)
                                                           (eval (caddr expr) binds)))
