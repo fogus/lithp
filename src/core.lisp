@@ -99,6 +99,9 @@
 (label car' (lambda (caexpr cabinds)
 	      (car (eval (car (cdr caexpr)) cabinds))))
 
+(label cdr' (lambda (cdexpr cdbinds)
+	      (cdr (eval (car (cdr cdexpr)) cdbinds))))
+
 (label eval (lambda (expr binds)
               (cond
                 ((atom expr) (lookup expr binds))
@@ -108,7 +111,7 @@
                    ((eq (car expr) (quote atom))  (atom'  expr binds))
                    ((eq (car expr) (quote eq))    (eq'    expr binds))
                    ((eq (car expr) (quote car))   (car'   expr binds))
-                   ((eq (car expr) (quote cdr))   (cdr    (eval (cadr expr) binds)))
+                   ((eq (car expr) (quote cdr))   (cdr'   expr binds))
                    ((eq (car expr) (quote cons))  (cons   (eval (cadr expr) binds)
                                                           (eval (caddr expr) binds)))
                    ((eq (car expr) (quote cond))  (eval-cond (cdr expr) binds))
