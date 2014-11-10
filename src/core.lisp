@@ -83,18 +83,27 @@
                                                      (filter filter_f (cdr filter_lst))))
                        (t (filter filter_f (cdr filter_lst))))))))
 
+(label env' (pair (pair (quote t) (quote t)) 
+		  (pair (quote nil) nil)))
+
 (label quote' (lambda (qexpr)
                 (car (cdr qexpr))))
+
+(label atom' (lambda (aexpr abinds)
+	       (atom (eval (car (cdr aexpr)) abinds))))
+
+(label (lambda (eexpr ebinds)
+         (eq (eval (car (cdr eexpr)) ebinds)
+	     (eval (car (cdr (cdr eexpr))) ebinds))))
 
 (label eval (lambda (expr binds)
               (cond
                 ((atom expr) (lookup expr binds))
                 ((atom (car expr))
                  (cond
-                   ((eq (car expr) (quote quote)) (cadr expr))
-                   ((eq (car expr) (quote atom))  (atom   (eval (cadr expr) binds)))
-                   ((eq (car expr) (quote eq))    (eq     (eval (cadr expr) binds)
-                                                          (eval (caddr expr) binds)))
+                   ((eq (car expr) (quote quote)) (quote' expr))
+                   ((eq (car expr) (quote atom))  (atom'  expr binds))
+                   ((eq (car expr) (quote eq))    (eq'    expr binds))
                    ((eq (car expr) (quote car))   (car    (eval (cadr expr) binds)))
                    ((eq (car expr) (quote cdr))   (cdr    (eval (cadr expr) binds)))
                    ((eq (car expr) (quote cons))  (cons   (eval (cadr expr) binds)
