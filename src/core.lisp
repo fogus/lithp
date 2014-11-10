@@ -114,6 +114,10 @@
 (label cond' (lambda (cndexpr cndbinds)
 	       (eval-cond (cdr cndexpr) cndbinds)))
 
+(label rewrite (lambda (rexpr rbinds)
+		 (cons (lookup (car rexpr) rbinds)
+		       (cdr rexpr))))
+
 (label eval (lambda (expr binds)
               (cond
                 ((atom expr) (lookup expr binds))
@@ -126,9 +130,7 @@
                    ((eq (car expr) (quote cdr))   (cdr'   expr binds))
                    ((eq (car expr) (quote cons))  (cons'  expr binds))
                    ((eq (car expr) (quote cond))  (cond'  expr binds))
-                   (t (eval (cons (lookup (car expr) binds)
-                                  (cdr expr))
-                            binds))))
+                   (t (eval (rewrite expr binds) binds))))
                 ((eq (caar expr) (quote label))
                  (eval (cons (caddar expr) (cdr expr))
                        (cons (pair (cadar expr) (car expr)) binds)))
