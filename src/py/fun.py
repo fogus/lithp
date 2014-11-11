@@ -9,6 +9,7 @@ from atom import FALSE
 class Function(Eval):
     def __init__(self, fn):
         self.fn = fn
+        self.hint = "fun"
 
     def __repr__( self):
         return "<built-in function %s>" % id(self.fn)

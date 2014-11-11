@@ -181,7 +181,7 @@ class Lisp:
         # hoping to go further with this implementation (e.g. into linear Lisp), but as of now it's a bit heavy-weight
         # for what is actually needed.  But I wouldn't be a programmer if I didn't needlessly abstract.
         if not isinstance(cell, Seq):
-            raise ValueError("Function not valid on non-sequence type.")
+            raise ValueError("Function car not valid on non-sequence type: %s" % cell.data)
 
         return cell.car()
 
@@ -237,7 +237,7 @@ class Lisp:
         cell = args[0].eval(env)
 
         if not isinstance(cell, Seq):
-            raise ValueError("Function not valid on non-sequence type.")
+            raise ValueError("Function cdr not valid on non-sequence type: %s" % cell.data)
 
         return cell.cdr()
 

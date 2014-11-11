@@ -74,7 +74,7 @@ class Lithp(Lisp):
         self.environment.set("cond",   Function(self.cond))
         
         # Define utility function
-        self.environment.set("print",  Function( self.println))
+        self.environment.set("print",  Function(self.println))
 
         # Special forms
         self.environment.set("lambda", Function(self.lambda_))

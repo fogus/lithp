@@ -19,6 +19,7 @@ from error import UnimplementedFunctionError
 class Atom(Eval, Egal):
     def __init__(self, d):
         self.data = d
+        self.hint = "atom"
 
     def __eq__(self, rhs):
         if isinstance(rhs, Atom):
