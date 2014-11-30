@@ -20,7 +20,7 @@ class Function(Eval):
 
 # &lambda; &lambda; &lambda;
 
-# The real power of McCarthy's Lisp srpings from Alonzo Chruch's &lambda;-calculus.
+# The real power of McCarthy's Lisp springs from Alonzo Church's &lambda;-calculus.
 class Lambda(Eval):
     def __init__(self, n, b):
         # The names that occur in the arg list of the lambda are bound (or dummy) variables
