@@ -122,7 +122,7 @@ class Lisp:
     # The original Lisp implementation was written for the IBM 704 by Steve Russell (a genius of the highest
     # order -- also the creator/discoverer of [Spacewar!](http://pdp-1.computerhistory.org/pdp-1/?f=theme&s=4&ss=3) 
     # and continuations).  The somewhat obtuse name for a function that returns the first element of an s-expression
-    # derives from the idiosyncracies of the IBM 704 on which Lisp was first implemented.  The `car` function was
+    # derives from the idiosyncrasies of the IBM 704 on which Lisp was first implemented.  The `car` function was
     # thus a shortening of the term "Contents of the Address part of Register number" that in itself has a very interesting
     # explanation.  That is, `car` was used to refer to the first half of the wordsize addressed by the IBM 704.  In this
     # particular machine (and many others at that time and since) the wordsize could address more than twice of the
@@ -210,7 +210,7 @@ class Lisp:
     # It would be interesting to learn the precise genesis of the idea behind the cons cell, but I imagine that it must have provoked
     # a eureka moment.  
     #
-    # I've already discussed how the IBM 704 hardware was especially ammenable to solving this problem efficiently, but the other points
+    # I've already discussed how the IBM 704 hardware was especially amenable to solving this problem efficiently, but the other points
     # bear further consideration.  Lisp popularly stands for "LISt Processing language" but as I explained, the basic unit of data was
     # instead the cons cell structure.  The fact of the matter is that the cons cell serves as both the implementation detail for lists
     # **and** the abstraction of a pair, all named oddly as if the implementation mattered.  If Lisp had originally gone whole hog into the
@@ -260,7 +260,7 @@ class Lisp:
     #     (cons (quote a) (quote b))
     #     ;=> Error
     # 
-    # I've agonized long and hard over wheter or not to implement McCarthy Lisp as the language described in *Recursive functions...*
+    # I've agonized long and hard over whether or not to implement McCarthy Lisp as the language described in *Recursive functions...*
     # as the anecdotal version only partially described in the *LISP 1.5 Programmer's Manual* and in most cases the former was my
     # choice.  The creation of "dotted pairs" (I believe) was not an aspect of the original description and therefore is not represented
     # in Lithp.  Sadly, I think that in some cases these version are mixed because I originally went down the path of creating a version of 

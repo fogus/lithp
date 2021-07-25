@@ -19,7 +19,7 @@
 # - [core.lisp](core.html)
 # 
 # The Lithp interpreter requires Python 2.6.1+ to function.
-#   please add comments, report errors, annecdotes, etc. to the [Lithp Github project page](http://github.com/fogus/lithp)
+#   please add comments, report errors, anecdotes, etc. to the [Lithp Github project page](http://github.com/fogus/lithp)
 # 
 import pdb
 import getopt, sys, io
