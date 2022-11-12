@@ -1,9 +1,12 @@
 # I one day plan to create a whole battery of errors so that the REPL provides a detailed report whenever
 # something goes wrong.  That day is not now.
 
+
 class Error(Exception):
     """Base class for exceptions in this module."""
+
     pass
+
 
 class UnimplementedFunctionError(Error):
     def __init__(self, message, thing):
@@ -13,6 +16,7 @@ class UnimplementedFunctionError(Error):
     def __str__(self):
         return self.message + repr(self.thing)
 
+
 class EvaluationError(Error):
     def __init__(self, env, args, message):
         self.env = env
@@ -20,4 +24,6 @@ class EvaluationError(Error):
         self.message = message
 
     def __str__(self):
-        return self.message + ", " + repr(self.args) + " in environment " + self.env.level
+        return (
+            self.message + ", " + repr(self.args) + " in environment " + self.env.level
+        )

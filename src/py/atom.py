@@ -23,9 +23,10 @@ class Atom(Eval, Egal):
 
     def __eq__(self, rhs):
         if isinstance(rhs, Atom):
-            return (self.data == rhs.data)
+            return self.data == rhs.data
         else:
             return False
+
 
 #### Symbols
 
@@ -43,6 +44,7 @@ class Symbol(Atom):
 
     def eval(self, env, args=None):
         return env.get(self.data)
+
 
 #### Truth
 
@@ -82,7 +84,9 @@ class String(Atom, Seq):
     # I originally added the ability to `combine` strings and symbols, but I might pull that back.
     def cons(self, e):
         if e.__class__ != self.__class__ and e.__class__ != Symbol.__class__:
-            raise UnimplementedFunctionError("Cannot cons a string and a ", e.__class__.__name__)
+            raise UnimplementedFunctionError(
+                "Cannot cons a string and a ", e.__class__.__name__
+            )
 
         return String(e.data + self.data)
 

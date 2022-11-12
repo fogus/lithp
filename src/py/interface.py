@@ -7,6 +7,7 @@ class Eval:
     def eval(self, environment, args=None):
         raise EvaluationError(environment, args, "Evaluation error")
 
+
 # I read Henry Baker's paper *Equal Rights for Functional Objects or, The More Things Change, The More They Are the Same*
 # and got a wild hair about `egal`.  However, it turns out that in McCarthy's Lisp the idea is trivial to the extreme.  Oh well...
 # it's still a great paper.  [Clojure](http://clojure.org)'s creator Rich Hickey summarizes `egal` much more succinctly than I ever could:
@@ -18,4 +19,3 @@ class Eval:
 class Egal:
     def __eq__(self, rhs):
         raise UnimplementedFunctionError("Function not yet implemented", rhs)
-

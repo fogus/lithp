@@ -8,15 +8,16 @@ from seq import List
 
 DELIM = string.whitespace + Lisp.SPECIAL
 
+
 class Reader:
     def __init__(self, str=None):
-       self.raw_source = str
-       self.index = 0
-       self.length = 0
-       self.sexpr = []
+        self.raw_source = str
+        self.index = 0
+        self.length = 0
+        self.sexpr = []
 
-       if str:
-           self.sexpr = self.get_sexpr()
+        if str:
+            self.sexpr = self.get_sexpr()
 
     def get_sexpr(self, source=None):
         if source:
@@ -27,14 +28,14 @@ class Reader:
         token = self.get_token()
         expr = None
 
-        if token == ')':
+        if token == ")":
             raise ValueError("Unexpected right paren")
-        elif token == '(':
+        elif token == "(":
             expr = []
             token = self.get_token()
 
-            while token != ')':
-                if token == '(':
+            while token != ")":
+                if token == "(":
                     # Start parsing again.
                     self.prev()
                     expr.append(self.get_sexpr())
@@ -48,7 +49,6 @@ class Reader:
             return List(expr)
         else:
             return token
-
 
     def get_token(self):
         if self.index >= self.length:

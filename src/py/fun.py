@@ -11,12 +11,13 @@ class Function(Eval):
         self.fn = fn
         self.hint = "fun"
 
-    def __repr__( self):
+    def __repr__(self):
         return "<built-in function %s>" % id(self.fn)
 
     # Evaluation just delegates out to the builtin.
     def eval(self, env, args):
         return self.fn(env, args)
+
 
 # &lambda; &lambda; &lambda;
 
@@ -26,7 +27,7 @@ class Lambda(Eval):
         # The names that occur in the arg list of the lambda are bound (or dummy) variables
         self.names = n
         # Unlike the builtin functions, lambdas have arbitrary bodies
-        self.body =  b
+        self.body = b
 
     def __repr__(self):
         return "<lambda %s>" % id(self)
@@ -47,7 +48,9 @@ class Lambda(Eval):
     # The bindings are set one by one corresponding to the input values.
     def set_bindings(self, containing_env, values):
         for i in range(len(values)):
-            containing_env.environment.binds[self.names[i].data] = values[i].eval(containing_env.environment)
+            containing_env.environment.binds[self.names[i].data] = values[i].eval(
+                containing_env.environment
+            )
 
     # The evaluation of a lambda is not much more complicated than a builtin function, except that it will
     # establish bindings in the root context.  Additionally, the root context will hold all bindings, so free
@@ -56,7 +59,11 @@ class Lambda(Eval):
         values = [a for a in args]
 
         if len(values) != len(self.names):
-            raise ValueError("Wrong number of arguments, expected {0}, got {1}".format(len(self.names), len(args)))
+            raise ValueError(
+                "Wrong number of arguments, expected {0}, got {1}".format(
+                    len(self.names), len(args)
+                )
+            )
 
         # Dynamic scope requires that names be bound on the global environment stack ...
         LITHP = env.get("__lithp__")
@@ -72,6 +79,7 @@ class Lambda(Eval):
         # Finally, the bindings established by the lambda are popped off of the dynamic stack
         LITHP.pop()
         return ret
+
 
 # Closures
 

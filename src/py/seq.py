@@ -1,18 +1,23 @@
 from interface import Eval, Egal
 from error import UnimplementedFunctionError
 
+
 class Seq(Eval, Egal):
-    def __init__( self):
+    def __init__(self):
         self.data = None
 
     def car(self):
         return self.data[0]
 
     def cdr(self):
-        raise UnimplementedFunctionError("Function not yet implemented for ", self.__class__.__name__)
+        raise UnimplementedFunctionError(
+            "Function not yet implemented for ", self.__class__.__name__
+        )
 
     def cons(self, e):
-        raise UnimplementedFunctionError("Function not yet implemented for ", self.__class__.__name__)
+        raise UnimplementedFunctionError(
+            "Function not yet implemented for ", self.__class__.__name__
+        )
 
     # The following four functions needed for iterability
     def __iter__(self):
@@ -57,7 +62,7 @@ class List(Seq):
             return List([])
 
     def cons(self, e):
-        ret = List(self.data[:]) # bugfix 1234977437
+        ret = List(self.data[:])  # bugfix 1234977437
         ret.data.insert(0, e)
         return ret
 
