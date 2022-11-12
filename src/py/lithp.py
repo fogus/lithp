@@ -5,7 +5,7 @@
 # It wasn't enough to write the Lisp interpreter -- I also wanted to share what I learned with *you*.  Reading
 # this source code provides a snapshot into the mind of John McCarthy, Steve Russell, Timothy P. Hart, and Mike Levin and
 # as an added bonus, myself.  The following source files are available for your reading:
-# 
+#
 # - [atom.py](atom.html)
 # - [env.py](env.html)
 # - [error.py](error.html)
@@ -17,12 +17,12 @@
 # - [reader.py](reader.html)
 # - [seq.py](seq.html)
 # - [core.lisp](core.html)
-# 
+#
 # The Lithp interpreter requires Python 2.6.1+ to function.
 #   please add comments, report errors, annecdotes, etc. to the [Lithp Github project page](http://github.com/fogus/lithp)
-# 
+#
 import pdb
-import getopt, sys, io
+import getopt, sys, io, os
 from env import Environment
 from fun import Function
 from atom import TRUE
@@ -38,19 +38,22 @@ VERSION = "v1.1"
 WWW = "http://fogus.me/fun/lithp/"
 PROMPT = "lithp"
 DEPTH_MARK = "."
+CURR_DIR = os.path.dirname(os.path.abspath(__file__))
+
 
 class Lithp(Lisp):
-    """ The Lithper class is the interpreter driver.  It does the following:
-            1. Initialize the global environment
-            2. Parse the cl arguments and act on them as appropriate
-            3. Initialize the base Lisp functions
-            4. Read input
-            5. Evaluate
-            6. Print
-            7. Loop back to #4
+    """The Lithper class is the interpreter driver.  It does the following:
+    1. Initialize the global environment
+    2. Parse the cl arguments and act on them as appropriate
+    3. Initialize the base Lisp functions
+    4. Read input
+    5. Evaluate
+    6. Print
+    7. Loop back to #4
     """
-    def __init__( self):
-        iostreams=(sys.stdin, sys.stdout, sys.stderr)
+
+    def __init__(self):
+        iostreams = (sys.stdin, sys.stdout, sys.stderr)
         (self.stdin, self.stdout, self.stderr) = iostreams
 
         self.debug = False
@@ -65,42 +68,42 @@ class Lithp(Lisp):
 
     def init(self):
         # Define core functions
-        self.environment.set("eq",     Function(self.eq))
-        self.environment.set("quote",  Function(self.quote))
-        self.environment.set("car",    Function(self.car))
-        self.environment.set("cdr",    Function(self.cdr))
-        self.environment.set("cons",   Function(self.cons))
-        self.environment.set("atom",   Function(self.atom))
-        self.environment.set("cond",   Function(self.cond))
-        
+        self.environment.set("eq", Function(self.eq))
+        self.environment.set("quote", Function(self.quote))
+        self.environment.set("car", Function(self.car))
+        self.environment.set("cdr", Function(self.cdr))
+        self.environment.set("cons", Function(self.cons))
+        self.environment.set("atom", Function(self.atom))
+        self.environment.set("cond", Function(self.cond))
+
         # Define utility function
-        self.environment.set("print",  Function(self.println))
+        self.environment.set("print", Function(self.println))
 
         # Special forms
         self.environment.set("lambda", Function(self.lambda_))
-        self.environment.set("label",  Function(self.label))
+        self.environment.set("label", Function(self.label))
 
         # Define meta-elements
-        self.environment.set("__lithp__",  self)
+        self.environment.set("__lithp__", self)
         self.environment.set("__global__", self.environment)
 
     def usage(self):
         self.print_banner()
-        print
-        print NAME.lower(), " <options> [lithp files]\n"
+        print()
+        print(NAME.lower(), " <options> [lithp files]\n")
 
     def print_banner(self):
-        print "The", NAME, "programming shell", VERSION
-        print "   by Fogus,", WWW
-        print "   Type :help for more information"
-        print
+        print("The", NAME, "programming shell", VERSION)
+        print("   by Fogus,", WWW)
+        print("   Type :help for more information")
+        print()
 
     def print_help(self):
-        print "Help for Lithp v", VERSION
-        print "  Type :help for more information"
-        print "  Type :env to see the bindings in the current environment"
-        print "  Type :load followed by one or more filenames to load source files"
-        print "  Type :quit to exit the interpreter"
+        print("Help for Lithp v", VERSION)
+        print("  Type :help for more information")
+        print("  Type :env to see the bindings in the current environment")
+        print("  Type :load followed by one or more filenames to load source files")
+        print("  Type :quit to exit the interpreter")
 
     def push(self, env=None):
         if env:
@@ -114,7 +117,7 @@ class Lithp(Lisp):
     def repl(self):
         while True:
             # Stealing the s-expression parsing approach from [CLIPS](http://clipsrules.sourceforge.net/)
-            source = self.get_complete_command() 
+            source = self.get_complete_command()
 
             # Check for any REPL directives
             try:
@@ -126,13 +129,12 @@ class Lithp(Lisp):
                     files = source.split(" ")[1:]
                     self.process_files(files)
                 elif source in [":env"]:
-                    print(self.environment)
+                    print((self.environment))
                 else:
                     self.process(source)
             except AttributeError:
-                print "Could not process command: ", source
+                print("Could not process command: ", source)
                 return
-                
 
     # Source is processed one s-expression at a time.
     def process(self, source):
@@ -144,7 +146,7 @@ class Lithp(Lisp):
             try:
                 result = self.eval(sexpr)
             except Error as err:
-                print(err)
+                print((err))
 
             if self.verbose:
                 self.stdout.write("    %s\n" % result)
@@ -154,9 +156,9 @@ class Lithp(Lisp):
     # In the process of living my life I had always heard that closures and dynamic scope
     # cannot co-exist.  As a thought-experiment I can visualize why this is the case.  That is,
     # while a closure captures the contextual binding of a variable, lookups in dynamic scoping
-    # occur on the dynamic stack.  This means that you may be able to close over a variable as 
-    # long as it's unique, but the moment someone else defines a variable of the same name 
-    # and attempt to look up the closed variable will resolve to the top-most binding on the 
+    # occur on the dynamic stack.  This means that you may be able to close over a variable as
+    # long as it's unique, but the moment someone else defines a variable of the same name
+    # and attempt to look up the closed variable will resolve to the top-most binding on the
     # dynamic stack.  This assumes the the lookup occurs before the variable of the same name
     # is popped.  While this is conceptually easy to grasp, I still wanted to see what would
     # happen in practice -- and it wasn't pretty.
@@ -171,7 +173,7 @@ class Lithp(Lisp):
         try:
             return sexpr.eval(self.environment)
         except ValueError as err:
-            print(err)
+            print((err))
             return FALSE
 
     # A complete command is defined as a complete s-expression.  Simply put, this would be any
@@ -181,15 +183,18 @@ class Lithp(Lisp):
             line = line + " "
 
         if self.environment.level != 0:
-            prompt = PROMPT + " %i%s " % (self.environment.level, DEPTH_MARK * (depth+1))
+            prompt = PROMPT + " %i%s " % (
+                self.environment.level,
+                DEPTH_MARK * (depth + 1),
+            )
         else:
             if depth == 0:
                 prompt = PROMPT + "> "
             else:
-                prompt = PROMPT + "%s " % (DEPTH_MARK * (depth+1))
+                prompt = PROMPT + "%s " % (DEPTH_MARK * (depth + 1))
 
             line = line + self.read_line(prompt)
-            
+
             # Used to balance the parens
             balance = 0
             for ch in line:
@@ -201,20 +206,20 @@ class Lithp(Lisp):
                     balance = balance - 1
             if balance > 0:
                 # Balanced parens gives zero
-                return self.get_complete_command(line, depth+1)
+                return self.get_complete_command(line, depth + 1)
             elif balance < 0:
                 raise ValueError("Invalid paren pattern")
             else:
                 return line
 
-    def read_line(self, prompt) :
+    def read_line(self, prompt):
         if prompt and self.verbose:
             self.stdout.write("%s" % prompt)
             self.stdout.flush()
 
         line = self.stdin.readline()
 
-        if(len(line) == 0):
+        if len(line) == 0:
             return "EOF"
 
         if line[-1] == "\n":
@@ -227,11 +232,11 @@ class Lithp(Lisp):
         self.verbose = False
 
         for filename in files:
-            infile = open( filename, 'r')
+            infile = open(filename, "r")
             self.stdin = infile
 
             source = self.get_complete_command()
-            while(source not in ["EOF"]):
+            while source not in ["EOF"]:
                 self.process(source)
 
                 source = self.get_complete_command()
@@ -241,18 +246,21 @@ class Lithp(Lisp):
 
         self.verbose = True
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     lithp = Lithp()
 
     try:
-        opts, files = getopt.getopt(sys.argv[1:], "hd", ["help", "debug", "no-core", "no-closures"])
+        opts, files = getopt.getopt(
+            sys.argv[1:], "hd", ["help", "debug", "no-core", "no-closures"]
+        )
     except getopt.GetoptError as err:
         # Print help information and exit:
-        print(str( err)) # will print something like "option -a not recognized"
+        print((str(err)))  # will print something like "option -a not recognized"
         lithp.usage()
         sys.exit(1)
 
-    for opt,arg in opts:
+    for opt, arg in opts:
         if opt in ("--help", "-h"):
             lithp.usage()
             sys.exit(0)
@@ -263,11 +271,11 @@ if __name__ == '__main__':
         elif opt in ("--no-closures"):
             lithp.closures = False
         else:
-            print("unknown option " + opt)
+            print(("unknown option " + opt))
 
     # Process the core lisp functions, if applicable
     if lithp.core:
-        lithp.process_files(["../core.lisp"])
+        lithp.process_files([os.path.join(CURR_DIR, "..", "core.lisp")])
 
     if len(files) > 0:
         lithp.process_files(files)
