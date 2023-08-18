@@ -1,4 +1,4 @@
-Lithp is a(nother) McCarthy Lisp interpreter (with macros too) written in the Python Programming Language.
+Lithp is a(nother) McCarthy Lisp interpreter (with macros implemented in Lithp) written in the Python Programming Language.
 
 *note: currently only the Python port is fully operational*
 
@@ -34,6 +34,12 @@ Two Special Forms
 ------------------
 1. `label`
 2. `lambda`
+
+Running
+=======
+
+    cd src/py
+	python lithp.py
 
 License
 =======

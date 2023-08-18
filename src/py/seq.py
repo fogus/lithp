@@ -2,11 +2,14 @@ from interface import Eval, Egal
 from error import UnimplementedFunctionError
 
 class Seq(Eval, Egal):
-    def __init__( self):
+    def __init__(self):
         self.data = None
 
     def car(self):
-        return self.data[0]
+        if self.data:
+            return self.data[0]
+
+        return self
 
     def cdr(self):
         raise UnimplementedFunctionError("Function not yet implemented for ", self.__class__.__name__)
@@ -62,9 +65,14 @@ class List(Seq):
         return ret
 
     def eval(self, env, args=None):
-        form = self.car().eval(env)
+        form = self.car()
 
-        return form.eval(env, self.cdr())
+        if form is self:
+            return self
+        else:
+            form = form.eval(env)
+
+            return form.eval(env, self.cdr())
 
     def __repr__(self):
         if self.data == []:

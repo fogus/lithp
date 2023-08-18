@@ -86,21 +86,21 @@ class Lithp(Lisp):
 
     def usage(self):
         self.print_banner()
-        print
-        print NAME.lower(), " <options> [lithp files]\n"
+        print()
+        print(NAME.lower(), " <options> [lithp files]\n")
 
     def print_banner(self):
-        print "The", NAME, "programming shell", VERSION
-        print "   by Fogus,", WWW
-        print "   Type :help for more information"
-        print
+        print("The", NAME, "programming shell", VERSION)
+        print("   by Fogus,", WWW)
+        print("   Type :help for more information")
+        print()
 
     def print_help(self):
-        print "Help for Lithp v", VERSION
-        print "  Type :help for more information"
-        print "  Type :env to see the bindings in the current environment"
-        print "  Type :load followed by one or more filenames to load source files"
-        print "  Type :quit to exit the interpreter"
+        print("Help for Lithp v", VERSION)
+        print("  Type :help for more information")
+        print("  Type :env to see the bindings in the current environment")
+        print("  Type :load followed by one or more filenames to load source files")
+        print("  Type :quit to exit the interpreter")
 
     def push(self, env=None):
         if env:
@@ -129,9 +129,9 @@ class Lithp(Lisp):
                     print(self.environment)
                 else:
                     self.process(source)
-            except AttributeError:
-                print "Could not process command: ", source
-                return
+            except AttributeError as ae:
+                print("Could not process command: ", source)
+                raise ae
                 
 
     # Source is processed one s-expression at a time.
@@ -267,6 +267,7 @@ if __name__ == '__main__':
 
     # Process the core lisp functions, if applicable
     if lithp.core:
+        print("Loading core.lisp...")
         lithp.process_files(["../core.lisp"])
 
     if len(files) > 0:
