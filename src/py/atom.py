@@ -57,7 +57,7 @@ FALSE = List()
 #### Strings
 
 # In McCarthy's original paper (McCarthy 1960) he uses the term *string* to mean symbols, but later on
-# he mentions them in a different context reagrding their role in something called *linear Lisp*.  I started
+# he mentions them in a different context regarding their role in something called *linear Lisp*.  I started
 # down the path of implementing linear Lisp also, but got sidetracked.  Perhaps I will find time to complete it
 # sometime in the future.  In the meantime strings are provided, but are not compliant with the Lisp 1
 # formalization.
